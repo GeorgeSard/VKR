@@ -5,7 +5,7 @@
   "feature_set": "EXTENDED",
   "train_rows": 72778,
   "val_rows": 73095,
-  "train_time_seconds": 2.3883677080011694,
+  "train_time_seconds": 2.4232989169977373,
   "val": {
     "labels": [
       0,

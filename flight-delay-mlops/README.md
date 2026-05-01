@@ -26,35 +26,28 @@ Production-grade ML-процесс для прогнозирования зад�
 
 ## Быстрый старт
 
-### 1. Окружение (uv — рекомендуется)
+### 1. Окружение
 
 ```bash
-# установка uv (если ещё нет)
-curl -LsSf https://astral.sh/uv/install.sh | sh
-
 cd flight-delay-mlops
-uv venv --python 3.11
+python3 -m venv .venv
 source .venv/bin/activate
-uv pip install -e ".[dev]"
+python -m pip install -e ".[dev]"
 pre-commit install
 ```
 
-Альтернатива через pip:
+То же через Makefile:
 
 ```bash
-cd flight-delay-mlops
-python3.11 -m venv .venv
-source .venv/bin/activate
-pip install -e ".[dev]"
-pre-commit install
+make setup
 ```
 
 ### 2. DVC
 
 ```bash
-dvc status
-dvc dag
-dvc repro
+make status
+make dag
+make repro
 ```
 
 Датасет уже подключён через DVC:
@@ -69,7 +62,7 @@ dvc remote add -d localstore /path/to/dvc-storage
 dvc push
 ```
 
-### 3. Воспроизведение датасета
+Если DVC remote не настроен, датасет можно воспроизвести генератором:
 
 ```bash
 python -m src.data.generate_dataset \
@@ -80,11 +73,13 @@ python -m src.data.generate_dataset \
 
 С тем же `seed=42` файл получается бит-в-бит идентичным.
 
-### 4. Пайплайн и тесты
+### 3. Пайплайн и тесты
 
 ```bash
-pytest tests/ -v
-dvc repro
+make lint
+make test
+make repro
+make verify
 ```
 
 Обязательные проверки: `tests/test_no_leakage.py` (нет `gt_*` среди признаков), `tests/test_split.py` (time-based split без пересечений).
@@ -96,7 +91,53 @@ load -> split -> features -> train_binary -> evaluate
                          \-> train_cause  -> evaluate
 ```
 
-По умолчанию используется быстрый sklearn-baseline `logreg` на feature set `EXTENDED`. CatBoost/LightGBM/XGBoost выносятся в следующий этап с MLflow-экспериментами.
+По умолчанию используется быстрый sklearn-baseline `logreg` на feature set `EXTENDED`. CatBoost/LightGBM/XGBoost выносятся в следующий этап с расширенными MLflow-экспериментами.
+
+### 4. MLflow
+
+Локальный режим без Docker:
+
+```bash
+make repro
+make mlflow-ui
+```
+
+Открой `http://127.0.0.1:5000`. Runs логируются в локальную SQLite-базу `mlflow.db`, артефакты — в `mlruns/`; оба пути игнорируются git.
+
+Docker-режим tracking server из трёх контейнеров (Postgres + MinIO + MLflow):
+
+```bash
+make mlflow-up
+MLFLOW_TRACKING_URI=http://localhost:5000 make repro-force-training
+```
+
+Открой:
+
+- MLflow UI: `http://localhost:5000`
+- MinIO console: `http://localhost:9001` (`minio` / `minio123`)
+
+Остановить:
+
+```bash
+make mlflow-down
+```
+
+### 5. Как понять, что требования выполняются
+
+```bash
+make verify
+```
+
+Скрипт проверяет:
+
+- DVC-стадии `load`, `split`, `features`, `train_binary`, `train_cause`, `evaluate`;
+- raw parquet/csv подключены через `.dvc`, а не лежат в git;
+- признаки не содержат `gt_*`, таргеты и post-flight поля;
+- split строго `train=2023`, `val=2024`, `test=2025`;
+- метрики задачи A включают F1, ROC-AUC, PR-AUC;
+- метрики задачи B включают macro-F1;
+- MLflow tracking настроен;
+- большие артефакты данных/моделей не отслеживаются git.
 
 ---
 
@@ -108,7 +149,7 @@ flight-delay-mlops/
 ├── pyproject.toml           # зависимости, ruff, mypy, pytest
 ├── params.yaml              # все гиперпараметры пайплайна
 ├── dvc.yaml                 # стадии: load -> split -> features -> train -> evaluate
-├── docker-compose.yml       # mlflow + api + monitoring
+├── docker-compose.yml       # postgres + minio + mlflow tracking server
 │
 ├── data/                    # под DVC
 │   ├── raw/                 # исходный parquet
@@ -147,7 +188,7 @@ flight-delay-mlops/
 - [x] Этап 1 — Интеграция датасета (load/validate/split)
 - [x] Этап 2 — Feature engineering (3 feature set + leakage tests)
 - [x] Этап 3 — DVC-пайплайн
-- [ ] Этап 4 — MLflow + базовое обучение
+- [x] Этап 4 — MLflow + базовое обучение
 - [ ] Этап 5 — Эксперименты (8 шт.)
 - [ ] Этап 6 — Финальная модель + FastAPI + Docker
 - [ ] Этап 7 — Мониторинг и обратная связь

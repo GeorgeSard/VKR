@@ -60,6 +60,8 @@ logs/
 # MLflow
 mlruns/
 mlartifacts/
+mlflow.db
+flight-delay-mlops/mlflow.db
 
 # DVC
 .dvc/cache/

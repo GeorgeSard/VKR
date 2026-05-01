@@ -45,6 +45,10 @@ tuning:
   timeout_seconds: 1800
 
 mlflow:
-  tracking_uri: http://localhost:5000
+  enabled: true
+  # Local default keeps `dvc repro` self-contained.
+  # To log into Docker MLflow server:
+  # MLFLOW_TRACKING_URI=http://localhost:5000 dvc repro -f train_binary -f train_cause
+  tracking_uri: sqlite:///mlflow.db
   experiment_binary: flight-delay-binary
   experiment_cause: flight-delay-cause

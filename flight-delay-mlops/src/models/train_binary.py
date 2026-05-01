@@ -16,6 +16,7 @@ from src.models.common import (
     split_xy,
     write_json,
 )
+from src.models.tracking import log_training_run, mlflow_run
 
 
 def train_binary(
@@ -58,6 +59,20 @@ def train_binary(
     }
     save_model(model, model_path)
     write_json(metrics, metrics_path)
+    with mlflow_run(
+        params=params,
+        task_name="binary_delay",
+        experiment_name=params["mlflow"]["experiment_binary"],
+        run_name=f"binary_{cfg['model']}_{params['features']['feature_set']}",
+    ):
+        log_training_run(
+            params=params,
+            task_config=cfg,
+            metrics=metrics,
+            metrics_path=metrics_path,
+            model=model,
+            model_artifact_name="binary_model",
+        )
 
 
 def _parse_args() -> argparse.Namespace:

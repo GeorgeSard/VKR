@@ -17,6 +17,7 @@ from src.models.common import (
     split_xy,
     write_json,
 )
+from src.models.tracking import log_training_run, mlflow_run
 
 
 def train_cause(
@@ -59,6 +60,20 @@ def train_cause(
     }
     save_model(model, model_path)
     write_json(metrics, metrics_path)
+    with mlflow_run(
+        params=params,
+        task_name="delay_cause",
+        experiment_name=params["mlflow"]["experiment_cause"],
+        run_name=f"cause_{cfg['model']}_{params['features']['feature_set']}",
+    ):
+        log_training_run(
+            params=params,
+            task_config=cfg,
+            metrics=metrics,
+            metrics_path=metrics_path,
+            model=model,
+            model_artifact_name="cause_model",
+        )
 
 
 def _parse_args() -> argparse.Namespace:

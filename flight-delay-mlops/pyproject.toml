@@ -24,7 +24,7 @@ dependencies = [
     "shap>=0.46",
 
     # MLOps
-    "mlflow>=2.18,<3.0",
+    "mlflow>=3.0,<4.0",
     "dvc>=3.55",
 
     # API / serving

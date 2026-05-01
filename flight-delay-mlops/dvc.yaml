@@ -56,12 +56,14 @@ stages:
     cmd: python -m src.models.train_binary --params params.yaml
     deps:
       - src/models/common.py
+      - src/models/tracking.py
       - src/models/train_binary.py
       - ${data.processed_dir}
       - params.yaml
     params:
       - seed
       - features.feature_set
+      - mlflow
       - train_binary
     outs:
       - models/binary_model.joblib
@@ -74,12 +76,14 @@ stages:
     deps:
       - src/data/split.py
       - src/models/common.py
+      - src/models/tracking.py
       - src/models/train_cause.py
       - ${data.processed_dir}
       - params.yaml
     params:
       - seed
       - features.feature_set
+      - mlflow
       - train_cause
     outs:
       - models/cause_model.joblib
