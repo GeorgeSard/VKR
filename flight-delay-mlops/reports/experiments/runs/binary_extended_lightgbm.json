@@ -1,0 +1,13 @@
+{
+  "status": "skipped",
+  "skip_reason": "OSError: dlopen(/Users/georgij/Projects/ВКР/flight-delay-mlops/.venv/lib/python3.13/site-packages/lightgbm/lib/lib_lightgbm.dylib, 0x0006): Library not loaded: @rpath/libomp.dylib Referenced from: <D44045CD-B874-3A27-...",
+  "skip_reason_full": "OSError: dlopen(/Users/georgij/Projects/ВКР/flight-delay-mlops/.venv/lib/python3.13/site-packages/lightgbm/lib/lib_lightgbm.dylib, 0x0006): Library not loaded: @rpath/libomp.dylib\n  Referenced from: <D44045CD-B874-3A27-9A61-F131D99AACE4> /Users/georgij/Projects/ВКР/flight-delay-mlops/.venv/lib/python3.13/site-packages/lightgbm/lib/lib_lightgbm.dylib\n  Reason: tried: '/opt/homebrew/opt/libomp/lib/libomp.dylib' (no such file), '/System/Volumes/Preboot/Cryptexes/OS/opt/homebrew/opt/libomp/lib/libomp.dylib' (no such file), '/opt/local/lib/libomp/libomp.dylib' (no such file), '/System/Volumes/Preboot/Cryptexes/OS/opt/local/lib/libomp/libomp.dylib' (no such file), '/opt/homebrew/opt/libomp/lib/libomp.dylib' (no such file), '/System/Volumes/Preboot/Cryptexes/OS/opt/homebrew/opt/libomp/lib/libomp.dylib' (no such file), '/opt/local/lib/libomp/libomp.dylib' (no such file), '/System/Volumes/Preboot/Cryptexes/OS/opt/local/lib/libomp/libomp.dylib' (no such file)",
+  "task": "binary",
+  "feature_set": "EXTENDED",
+  "model": "lightgbm",
+  "target": "is_departure_delayed_15m",
+  "train_rows": 0,
+  "val_rows": 0,
+  "train_time_seconds": 0.0,
+  "metrics": {}
+}

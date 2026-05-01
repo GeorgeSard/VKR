@@ -2,12 +2,13 @@
   "runs": [
     {
       "experiment_group": "5.1_feature_sets",
+      "status": "completed",
       "task": "binary",
       "feature_set": "BASELINE",
       "model": "logreg",
       "train_rows": 72778,
       "val_rows": 73095,
-      "train_time_seconds": 1.6905126250057947,
+      "train_time_seconds": 1.7006280829955358,
       "metrics": {
         "labels": [
           0,
@@ -33,12 +34,13 @@
     },
     {
       "experiment_group": "5.1_feature_sets",
+      "status": "completed",
       "task": "cause",
       "feature_set": "BASELINE",
       "model": "logreg",
       "train_rows": 17457,
       "val_rows": 17586,
-      "train_time_seconds": 1.219015209004283,
+      "train_time_seconds": 1.2272987500036834,
       "metrics": {
         "labels": [
           "airport_congestion",
@@ -136,12 +138,13 @@
     },
     {
       "experiment_group": "5.1_feature_sets",
+      "status": "completed",
       "task": "binary",
       "feature_set": "EXTENDED",
       "model": "logreg",
       "train_rows": 72778,
       "val_rows": 73095,
-      "train_time_seconds": 2.4202754579891916,
+      "train_time_seconds": 2.403861832994153,
       "metrics": {
         "labels": [
           0,
@@ -167,12 +170,13 @@
     },
     {
       "experiment_group": "5.1_feature_sets",
+      "status": "completed",
       "task": "cause",
       "feature_set": "EXTENDED",
       "model": "logreg",
       "train_rows": 17457,
       "val_rows": 17586,
-      "train_time_seconds": 1.549282874999335,
+      "train_time_seconds": 1.5459989589871839,
       "metrics": {
         "labels": [
           "airport_congestion",
@@ -270,12 +274,13 @@
     },
     {
       "experiment_group": "5.1_feature_sets",
+      "status": "completed",
       "task": "binary",
       "feature_set": "WITH_NETWORK",
       "model": "logreg",
       "train_rows": 72778,
       "val_rows": 73095,
-      "train_time_seconds": 7.766050541991717,
+      "train_time_seconds": 7.788696832998539,
       "metrics": {
         "labels": [
           0,
@@ -301,12 +306,13 @@
     },
     {
       "experiment_group": "5.1_feature_sets",
+      "status": "completed",
       "task": "cause",
       "feature_set": "WITH_NETWORK",
       "model": "logreg",
       "train_rows": 17457,
       "val_rows": 17586,
-      "train_time_seconds": 2.305841458000941,
+      "train_time_seconds": 2.3029392500029644,
       "metrics": {
         "labels": [
           "airport_congestion",
@@ -404,12 +410,13 @@
     },
     {
       "experiment_group": "5.2_model_comparison",
+      "status": "completed",
       "task": "binary",
       "feature_set": "EXTENDED",
       "model": "logreg",
       "train_rows": 72778,
       "val_rows": 73095,
-      "train_time_seconds": 2.4202754579891916,
+      "train_time_seconds": 2.403861832994153,
       "metrics": {
         "labels": [
           0,
@@ -435,12 +442,13 @@
     },
     {
       "experiment_group": "5.2_model_comparison",
+      "status": "completed",
       "task": "cause",
       "feature_set": "EXTENDED",
       "model": "logreg",
       "train_rows": 17457,
       "val_rows": 17586,
-      "train_time_seconds": 1.549282874999335,
+      "train_time_seconds": 1.5459989589871839,
       "metrics": {
         "labels": [
           "airport_congestion",
@@ -538,12 +546,13 @@
     },
     {
       "experiment_group": "5.2_model_comparison",
+      "status": "completed",
       "task": "binary",
       "feature_set": "EXTENDED",
       "model": "random_forest",
       "train_rows": 72778,
       "val_rows": 73095,
-      "train_time_seconds": 2.4346753749996424,
+      "train_time_seconds": 2.2146385829983046,
       "metrics": {
         "labels": [
           0,
@@ -569,12 +578,13 @@
     },
     {
       "experiment_group": "5.2_model_comparison",
+      "status": "completed",
       "task": "cause",
       "feature_set": "EXTENDED",
       "model": "random_forest",
       "train_rows": 17457,
       "val_rows": 17586,
-      "train_time_seconds": 0.4427503750048345,
+      "train_time_seconds": 0.4467410000070231,
       "metrics": {
         "labels": [
           "airport_congestion",
@@ -669,6 +679,198 @@
           }
         }
       }
+    },
+    {
+      "experiment_group": "5.2_model_comparison",
+      "status": "completed",
+      "task": "binary",
+      "feature_set": "EXTENDED",
+      "model": "catboost",
+      "train_rows": 72778,
+      "val_rows": 73095,
+      "train_time_seconds": 1.2563779580086702,
+      "metrics": {
+        "labels": [
+          0,
+          1
+        ],
+        "accuracy": 0.7786715917641426,
+        "precision": 0.5281509916826616,
+        "recall": 0.7510519731604686,
+        "f1": 0.6201812461849087,
+        "roc_auc": 0.8374889129454864,
+        "pr_auc": 0.7223064361251783,
+        "confusion_matrix": [
+          [
+            43709,
+            11800
+          ],
+          [
+            4378,
+            13208
+          ]
+        ]
+      }
+    },
+    {
+      "experiment_group": "5.2_model_comparison",
+      "status": "completed",
+      "task": "cause",
+      "feature_set": "EXTENDED",
+      "model": "catboost",
+      "train_rows": 17457,
+      "val_rows": 17586,
+      "train_time_seconds": 0.9884804999892367,
+      "metrics": {
+        "labels": [
+          "airport_congestion",
+          "carrier_operational",
+          "reactionary",
+          "security",
+          "weather"
+        ],
+        "accuracy": 0.723530080746048,
+        "macro_f1": 0.6074696213543069,
+        "weighted_f1": 0.7279329018760451,
+        "confusion_matrix": [
+          [
+            2508,
+            87,
+            112,
+            13,
+            35
+          ],
+          [
+            817,
+            3141,
+            217,
+            593,
+            914
+          ],
+          [
+            107,
+            53,
+            2270,
+            5,
+            224
+          ],
+          [
+            42,
+            143,
+            12,
+            39,
+            49
+          ],
+          [
+            417,
+            88,
+            868,
+            66,
+            4766
+          ]
+        ],
+        "classification_report": {
+          "airport_congestion": {
+            "precision": 0.6445643793369313,
+            "recall": 0.9103448275862069,
+            "f1-score": 0.7547396930484502,
+            "support": 2755.0
+          },
+          "carrier_operational": {
+            "precision": 0.8943621867881549,
+            "recall": 0.5527983104540655,
+            "f1-score": 0.6832716989340875,
+            "support": 5682.0
+          },
+          "reactionary": {
+            "precision": 0.6524863466513366,
+            "recall": 0.8537044001504325,
+            "f1-score": 0.7396546106223526,
+            "support": 2659.0
+          },
+          "security": {
+            "precision": 0.05446927374301676,
+            "recall": 0.1368421052631579,
+            "f1-score": 0.07792207792207792,
+            "support": 285.0
+          },
+          "weather": {
+            "precision": 0.7959251837007348,
+            "recall": 0.7680902497985496,
+            "f1-score": 0.7817600262445665,
+            "support": 6205.0
+          },
+          "accuracy": 0.723530080746048,
+          "macro avg": {
+            "precision": 0.608361474044035,
+            "recall": 0.6443559786504824,
+            "f1-score": 0.6074696213543069,
+            "support": 17586.0
+          },
+          "weighted avg": {
+            "precision": 0.7703139721385913,
+            "recall": 0.723530080746048,
+            "f1-score": 0.7279329018760451,
+            "support": 17586.0
+          }
+        }
+      }
+    },
+    {
+      "experiment_group": "5.2_model_comparison",
+      "status": "skipped",
+      "skip_reason": "XGBoostError: XGBoost Library (libxgboost.dylib) could not be loaded. Likely causes: * OpenMP runtime is not installed - vcomp140.dll or libgomp-1.dll for Windows - libomp.dylib for Mac OSX - libgomp.so for Linux and ...",
+      "skip_reason_full": "XGBoostError: \nXGBoost Library (libxgboost.dylib) could not be loaded.\nLikely causes:\n  * OpenMP runtime is not installed\n    - vcomp140.dll or libgomp-1.dll for Windows\n    - libomp.dylib for Mac OSX\n    - libgomp.so for Linux and other UNIX-like OSes\n    Mac OSX users: Run `brew install libomp` to install OpenMP runtime.\n\n  * You are running 32-bit Python on a 64-bit OS\n\nError message(s): [\"dlopen(/Users/georgij/Projects/ВКР/flight-delay-mlops/.venv/lib/python3.13/site-packages/xgboost/lib/libxgboost.dylib, 0x0006): Library not loaded: @rpath/libomp.dylib\\n  Referenced from: <1A0D8152-BF46-3BE0-B651-EE965C187777> /Users/georgij/Projects/ВКР/flight-delay-mlops/.venv/lib/python3.13/site-packages/xgboost/lib/libxgboost.dylib\\n  Reason: tried: '/opt/homebrew/opt/libomp/lib/libomp.dylib' (no such file), '/System/Volumes/Preboot/Cryptexes/OS/opt/homebrew/opt/libomp/lib/libomp.dylib' (no such file), '/opt/homebrew/opt/libomp/lib/libomp.dylib' (no such file), '/System/Volumes/Preboot/Cryptexes/OS/opt/homebrew/opt/libomp/lib/libomp.dylib' (no such file)\"]\n",
+      "task": "binary",
+      "feature_set": "EXTENDED",
+      "model": "xgboost",
+      "target": "is_departure_delayed_15m",
+      "train_rows": 0,
+      "val_rows": 0,
+      "train_time_seconds": 0.0,
+      "metrics": {}
+    },
+    {
+      "experiment_group": "5.2_model_comparison",
+      "status": "skipped",
+      "skip_reason": "XGBoostError: XGBoost Library (libxgboost.dylib) could not be loaded. Likely causes: * OpenMP runtime is not installed - vcomp140.dll or libgomp-1.dll for Windows - libomp.dylib for Mac OSX - libgomp.so for Linux and ...",
+      "skip_reason_full": "XGBoostError: \nXGBoost Library (libxgboost.dylib) could not be loaded.\nLikely causes:\n  * OpenMP runtime is not installed\n    - vcomp140.dll or libgomp-1.dll for Windows\n    - libomp.dylib for Mac OSX\n    - libgomp.so for Linux and other UNIX-like OSes\n    Mac OSX users: Run `brew install libomp` to install OpenMP runtime.\n\n  * You are running 32-bit Python on a 64-bit OS\n\nError message(s): [\"dlopen(/Users/georgij/Projects/ВКР/flight-delay-mlops/.venv/lib/python3.13/site-packages/xgboost/lib/libxgboost.dylib, 0x0006): Library not loaded: @rpath/libomp.dylib\\n  Referenced from: <1A0D8152-BF46-3BE0-B651-EE965C187777> /Users/georgij/Projects/ВКР/flight-delay-mlops/.venv/lib/python3.13/site-packages/xgboost/lib/libxgboost.dylib\\n  Reason: tried: '/opt/homebrew/opt/libomp/lib/libomp.dylib' (no such file), '/System/Volumes/Preboot/Cryptexes/OS/opt/homebrew/opt/libomp/lib/libomp.dylib' (no such file), '/opt/homebrew/opt/libomp/lib/libomp.dylib' (no such file), '/System/Volumes/Preboot/Cryptexes/OS/opt/homebrew/opt/libomp/lib/libomp.dylib' (no such file)\"]\n",
+      "task": "cause",
+      "feature_set": "EXTENDED",
+      "model": "xgboost",
+      "target": "probable_delay_cause",
+      "train_rows": 0,
+      "val_rows": 0,
+      "train_time_seconds": 0.0,
+      "metrics": {}
+    },
+    {
+      "experiment_group": "5.2_model_comparison",
+      "status": "skipped",
+      "skip_reason": "OSError: dlopen(/Users/georgij/Projects/ВКР/flight-delay-mlops/.venv/lib/python3.13/site-packages/lightgbm/lib/lib_lightgbm.dylib, 0x0006): Library not loaded: @rpath/libomp.dylib Referenced from: <D44045CD-B874-3A27-...",
+      "skip_reason_full": "OSError: dlopen(/Users/georgij/Projects/ВКР/flight-delay-mlops/.venv/lib/python3.13/site-packages/lightgbm/lib/lib_lightgbm.dylib, 0x0006): Library not loaded: @rpath/libomp.dylib\n  Referenced from: <D44045CD-B874-3A27-9A61-F131D99AACE4> /Users/georgij/Projects/ВКР/flight-delay-mlops/.venv/lib/python3.13/site-packages/lightgbm/lib/lib_lightgbm.dylib\n  Reason: tried: '/opt/homebrew/opt/libomp/lib/libomp.dylib' (no such file), '/System/Volumes/Preboot/Cryptexes/OS/opt/homebrew/opt/libomp/lib/libomp.dylib' (no such file), '/opt/local/lib/libomp/libomp.dylib' (no such file), '/System/Volumes/Preboot/Cryptexes/OS/opt/local/lib/libomp/libomp.dylib' (no such file), '/opt/homebrew/opt/libomp/lib/libomp.dylib' (no such file), '/System/Volumes/Preboot/Cryptexes/OS/opt/homebrew/opt/libomp/lib/libomp.dylib' (no such file), '/opt/local/lib/libomp/libomp.dylib' (no such file), '/System/Volumes/Preboot/Cryptexes/OS/opt/local/lib/libomp/libomp.dylib' (no such file)",
+      "task": "binary",
+      "feature_set": "EXTENDED",
+      "model": "lightgbm",
+      "target": "is_departure_delayed_15m",
+      "train_rows": 0,
+      "val_rows": 0,
+      "train_time_seconds": 0.0,
+      "metrics": {}
+    },
+    {
+      "experiment_group": "5.2_model_comparison",
+      "status": "skipped",
+      "skip_reason": "OSError: dlopen(/Users/georgij/Projects/ВКР/flight-delay-mlops/.venv/lib/python3.13/site-packages/lightgbm/lib/lib_lightgbm.dylib, 0x0006): Library not loaded: @rpath/libomp.dylib Referenced from: <D44045CD-B874-3A27-...",
+      "skip_reason_full": "OSError: dlopen(/Users/georgij/Projects/ВКР/flight-delay-mlops/.venv/lib/python3.13/site-packages/lightgbm/lib/lib_lightgbm.dylib, 0x0006): Library not loaded: @rpath/libomp.dylib\n  Referenced from: <D44045CD-B874-3A27-9A61-F131D99AACE4> /Users/georgij/Projects/ВКР/flight-delay-mlops/.venv/lib/python3.13/site-packages/lightgbm/lib/lib_lightgbm.dylib\n  Reason: tried: '/opt/homebrew/opt/libomp/lib/libomp.dylib' (no such file), '/System/Volumes/Preboot/Cryptexes/OS/opt/homebrew/opt/libomp/lib/libomp.dylib' (no such file), '/opt/local/lib/libomp/libomp.dylib' (no such file), '/System/Volumes/Preboot/Cryptexes/OS/opt/local/lib/libomp/libomp.dylib' (no such file), '/opt/homebrew/opt/libomp/lib/libomp.dylib' (no such file), '/System/Volumes/Preboot/Cryptexes/OS/opt/homebrew/opt/libomp/lib/libomp.dylib' (no such file), '/opt/local/lib/libomp/libomp.dylib' (no such file), '/System/Volumes/Preboot/Cryptexes/OS/opt/local/lib/libomp/libomp.dylib' (no such file)",
+      "task": "cause",
+      "feature_set": "EXTENDED",
+      "model": "lightgbm",
+      "target": "probable_delay_cause",
+      "train_rows": 0,
+      "val_rows": 0,
+      "train_time_seconds": 0.0,
+      "metrics": {}
     }
   ]
 }

@@ -1,11 +1,12 @@
 {
+  "status": "completed",
   "task": "cause",
   "model": "logreg",
   "feature_set": "WITH_NETWORK",
   "target": "probable_delay_cause",
   "train_rows": 17457,
   "val_rows": 17586,
-  "train_time_seconds": 2.305841458000941,
+  "train_time_seconds": 2.3029392500029644,
   "val": {
     "labels": [
       "airport_congestion",

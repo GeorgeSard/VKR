@@ -3,10 +3,12 @@
 from __future__ import annotations
 
 import json
+from importlib import import_module
 from pathlib import Path
 from typing import Any
 
 import joblib
+import numpy as np
 import pandas as pd
 from sklearn.compose import ColumnTransformer
 from sklearn.ensemble import RandomForestClassifier
@@ -71,10 +73,59 @@ def build_classifier(
             n_jobs=-1,
         )
         scale_numeric = False
+    elif model_name == "catboost":
+        catboost = import_module("catboost")
+        catboost_params: dict[str, Any] = {
+            "iterations": int(hyperparams.get("iterations", 120)),
+            "learning_rate": float(hyperparams.get("learning_rate", 0.08)),
+            "depth": int(hyperparams.get("depth", 6)),
+            "l2_leaf_reg": float(hyperparams.get("l2_leaf_reg", 3.0)),
+            "random_seed": seed,
+            "allow_writing_files": False,
+            "verbose": False,
+        }
+        if class_weight == "balanced":
+            catboost_params["auto_class_weights"] = "Balanced"
+        if task == "cause":
+            catboost_params["loss_function"] = "MultiClass"
+        estimator = catboost.CatBoostClassifier(**catboost_params)
+        scale_numeric = False
+    elif model_name == "xgboost":
+        xgboost = import_module("xgboost")
+        xgb_params = {
+            "n_estimators": int(hyperparams.get("n_estimators", 120)),
+            "max_depth": int(hyperparams.get("max_depth", 6)),
+            "learning_rate": float(hyperparams.get("learning_rate", 0.08)),
+            "subsample": float(hyperparams.get("subsample", 0.9)),
+            "colsample_bytree": float(hyperparams.get("colsample_bytree", 0.9)),
+            "tree_method": str(hyperparams.get("tree_method", "hist")),
+            "random_state": seed,
+            "n_jobs": -1,
+            "eval_metric": "logloss",
+        }
+        estimator = xgboost.XGBClassifier(**xgb_params)
+        if task == "cause":
+            estimator = OneVsRestClassifier(estimator)
+        scale_numeric = False
+    elif model_name == "lightgbm":
+        lightgbm = import_module("lightgbm")
+        estimator = lightgbm.LGBMClassifier(
+            n_estimators=int(hyperparams.get("n_estimators", 120)),
+            max_depth=int(hyperparams.get("max_depth", -1)),
+            learning_rate=float(hyperparams.get("learning_rate", 0.08)),
+            num_leaves=int(hyperparams.get("num_leaves", 31)),
+            subsample=float(hyperparams.get("subsample", 0.9)),
+            colsample_bytree=float(hyperparams.get("colsample_bytree", 0.9)),
+            class_weight=class_weight,
+            random_state=seed,
+            n_jobs=-1,
+            verbosity=-1,
+        )
+        scale_numeric = False
     else:
         raise ValueError(
             f"Unsupported model '{model_name}' for {task}. "
-            "The current sklearn baseline supports: logreg | random_forest."
+            "Supported models: logreg | random_forest | catboost | xgboost | lightgbm."
         )
 
     return Pipeline(
@@ -118,7 +169,7 @@ def _categorical_columns(df: pd.DataFrame) -> list[str]:
 def binary_metrics(model: Pipeline, X: pd.DataFrame, y: pd.Series) -> dict[str, Any]:
     """Compute task A metrics; F1 is the primary selection metric."""
     y_true = y.astype(int)
-    y_pred = model.predict(X).astype(int)
+    y_pred = np.asarray(model.predict(X)).ravel().astype(int)
     probabilities = _positive_probabilities(model, X)
 
     return {
@@ -136,7 +187,7 @@ def binary_metrics(model: Pipeline, X: pd.DataFrame, y: pd.Series) -> dict[str, 
 def multiclass_metrics(model: Pipeline, X: pd.DataFrame, y: pd.Series) -> dict[str, Any]:
     """Compute task B metrics; macro-F1 is the primary selection metric."""
     y_true = y.astype(str)
-    y_pred = pd.Series(model.predict(X), index=y.index).astype(str)
+    y_pred = pd.Series(np.asarray(model.predict(X)).ravel(), index=y.index).astype(str)
     labels = sorted(set(y_true) | set(y_pred))
 
     return {
@@ -167,6 +218,23 @@ def load_model(path: Path) -> Pipeline:
 def write_json(payload: dict[str, Any], path: Path) -> None:
     path.parent.mkdir(parents=True, exist_ok=True)
     path.write_text(json.dumps(payload, ensure_ascii=False, indent=2), encoding="utf-8")
+
+
+def model_unavailability_reason(model_name: str) -> str | None:
+    """Return a human-readable reason if an optional model backend is unavailable."""
+    module_by_model = {
+        "catboost": "catboost",
+        "xgboost": "xgboost",
+        "lightgbm": "lightgbm",
+    }
+    module_name = module_by_model.get(model_name)
+    if module_name is None:
+        return None
+    try:
+        import_module(module_name)
+    except Exception as exc:
+        return f"{type(exc).__name__}: {exc}"
+    return None
 
 
 def _positive_probabilities(model: Pipeline, X: pd.DataFrame) -> pd.Series:

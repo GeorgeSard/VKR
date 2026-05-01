@@ -1,11 +1,12 @@
 {
+  "status": "completed",
   "task": "cause",
   "model": "random_forest",
   "feature_set": "EXTENDED",
   "target": "probable_delay_cause",
   "train_rows": 17457,
   "val_rows": 17586,
-  "train_time_seconds": 0.4427503750048345,
+  "train_time_seconds": 0.4467410000070231,
   "val": {
     "labels": [
       "airport_congestion",

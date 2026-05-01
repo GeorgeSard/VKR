@@ -1,11 +1,17 @@
-experiment_group,task,feature_set,model,train_rows,val_rows,train_time_seconds,accuracy,f1,roc_auc,pr_auc,macro_f1,weighted_f1
-5.1_feature_sets,binary,BASELINE,logreg,72778,73095,1.6905,0.780121759354265,0.6018036767256331,0.8229332680274298,0.6995323256188642,,
-5.1_feature_sets,cause,BASELINE,logreg,17457,17586,1.219,0.734277266007051,,,,0.6126341343240232,0.7400498302340485
-5.1_feature_sets,binary,EXTENDED,logreg,72778,73095,2.4203,0.7802175251385184,0.6021840873634945,0.8234257749140146,0.6999434659726643,,
-5.1_feature_sets,cause,EXTENDED,logreg,17457,17586,1.5493,0.7333105879677015,,,,0.6110049265889254,0.739393985565399
-5.1_feature_sets,binary,WITH_NETWORK,logreg,72778,73095,7.7661,0.7871400232574047,0.6062308607293801,0.8246058805262433,0.7015114631441907,,
-5.1_feature_sets,cause,WITH_NETWORK,logreg,17457,17586,2.3058,0.711304446718981,,,,0.598690284216498,0.7240136028117375
-5.2_model_comparison,binary,EXTENDED,logreg,72778,73095,2.4203,0.7802175251385184,0.6021840873634945,0.8234257749140146,0.6999434659726643,,
-5.2_model_comparison,cause,EXTENDED,logreg,17457,17586,1.5493,0.7333105879677015,,,,0.6110049265889254,0.739393985565399
-5.2_model_comparison,binary,EXTENDED,random_forest,72778,73095,2.4347,0.7810520555441549,0.618970525213085,0.8295039252105137,0.6995373712380598,,
-5.2_model_comparison,cause,EXTENDED,random_forest,17457,17586,0.4428,0.7592971682019789,,,,0.6134386435685502,0.754524746825407
+experiment_group,task,feature_set,model,status,skip_reason,train_rows,val_rows,train_time_seconds,accuracy,f1,roc_auc,pr_auc,macro_f1,weighted_f1
+5.1_feature_sets,binary,BASELINE,logreg,completed,,72778,73095,1.7006,0.780121759354265,0.6018036767256331,0.8229332680274298,0.6995323256188642,,
+5.1_feature_sets,cause,BASELINE,logreg,completed,,17457,17586,1.2273,0.734277266007051,,,,0.6126341343240232,0.7400498302340485
+5.1_feature_sets,binary,EXTENDED,logreg,completed,,72778,73095,2.4039,0.7802175251385184,0.6021840873634945,0.8234257749140146,0.6999434659726643,,
+5.1_feature_sets,cause,EXTENDED,logreg,completed,,17457,17586,1.546,0.7333105879677015,,,,0.6110049265889254,0.739393985565399
+5.1_feature_sets,binary,WITH_NETWORK,logreg,completed,,72778,73095,7.7887,0.7871400232574047,0.6062308607293801,0.8246058805262433,0.7015114631441907,,
+5.1_feature_sets,cause,WITH_NETWORK,logreg,completed,,17457,17586,2.3029,0.711304446718981,,,,0.598690284216498,0.7240136028117375
+5.2_model_comparison,binary,EXTENDED,logreg,completed,,72778,73095,2.4039,0.7802175251385184,0.6021840873634945,0.8234257749140146,0.6999434659726643,,
+5.2_model_comparison,cause,EXTENDED,logreg,completed,,17457,17586,1.546,0.7333105879677015,,,,0.6110049265889254,0.739393985565399
+5.2_model_comparison,binary,EXTENDED,random_forest,completed,,72778,73095,2.2146,0.7810520555441549,0.618970525213085,0.8295039252105137,0.6995373712380598,,
+5.2_model_comparison,cause,EXTENDED,random_forest,completed,,17457,17586,0.4467,0.7592971682019789,,,,0.6134386435685502,0.754524746825407
+5.2_model_comparison,binary,EXTENDED,catboost,completed,,72778,73095,1.2564,0.7786715917641426,0.6201812461849087,0.8374889129454864,0.7223064361251783,,
+5.2_model_comparison,cause,EXTENDED,catboost,completed,,17457,17586,0.9885,0.723530080746048,,,,0.6074696213543069,0.7279329018760451
+5.2_model_comparison,binary,EXTENDED,xgboost,skipped,XGBoostError: XGBoost Library (libxgboost.dylib) could not be loaded. Likely causes: * OpenMP runtime is not installed - vcomp140.dll or libgomp-1.dll for Windows - libomp.dylib for Mac OSX - libgomp.so for Linux and ...,0,0,0.0,,,,,,
+5.2_model_comparison,cause,EXTENDED,xgboost,skipped,XGBoostError: XGBoost Library (libxgboost.dylib) could not be loaded. Likely causes: * OpenMP runtime is not installed - vcomp140.dll or libgomp-1.dll for Windows - libomp.dylib for Mac OSX - libgomp.so for Linux and ...,0,0,0.0,,,,,,
+5.2_model_comparison,binary,EXTENDED,lightgbm,skipped,"OSError: dlopen(/Users/georgij/Projects/ВКР/flight-delay-mlops/.venv/lib/python3.13/site-packages/lightgbm/lib/lib_lightgbm.dylib, 0x0006): Library not loaded: @rpath/libomp.dylib Referenced from: <D44045CD-B874-3A27-...",0,0,0.0,,,,,,
+5.2_model_comparison,cause,EXTENDED,lightgbm,skipped,"OSError: dlopen(/Users/georgij/Projects/ВКР/flight-delay-mlops/.venv/lib/python3.13/site-packages/lightgbm/lib/lib_lightgbm.dylib, 0x0006): Library not loaded: @rpath/libomp.dylib Referenced from: <D44045CD-B874-3A27-...",0,0,0.0,,,,,,

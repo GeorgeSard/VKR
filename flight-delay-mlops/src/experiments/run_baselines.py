@@ -19,6 +19,7 @@ from src.models.common import (
     binary_metrics,
     build_classifier,
     load_processed_split,
+    model_unavailability_reason,
     multiclass_metrics,
     split_xy,
     write_json,
@@ -40,6 +41,35 @@ DEFAULT_EXPERIMENT_MODELS: dict[str, dict[str, Any]] = {
             "n_estimators": 120,
             "max_depth": 12,
             "min_samples_leaf": 5,
+        },
+    },
+    "catboost": {
+        "class_weight": "balanced",
+        "hyperparams": {
+            "iterations": 120,
+            "learning_rate": 0.08,
+            "depth": 6,
+            "l2_leaf_reg": 3.0,
+        },
+    },
+    "xgboost": {
+        "class_weight": None,
+        "hyperparams": {
+            "n_estimators": 120,
+            "learning_rate": 0.08,
+            "max_depth": 6,
+            "subsample": 0.9,
+            "colsample_bytree": 0.9,
+        },
+    },
+    "lightgbm": {
+        "class_weight": "balanced",
+        "hyperparams": {
+            "n_estimators": 120,
+            "learning_rate": 0.08,
+            "num_leaves": 31,
+            "subsample": 0.9,
+            "colsample_bytree": 0.9,
         },
     },
 }
@@ -66,7 +96,7 @@ def run_baseline_experiments(
         FeatureSet.EXTENDED,
         FeatureSet.WITH_NETWORK,
     ),
-    models: tuple[str, ...] = ("logreg", "random_forest"),
+    models: tuple[str, ...] = ("logreg", "random_forest", "catboost", "xgboost", "lightgbm"),
 ) -> list[dict[str, Any]]:
     """Run experiment 5.1 and a fast baseline slice of experiment 5.2."""
     output_dir.mkdir(parents=True, exist_ok=True)
@@ -165,6 +195,12 @@ def _run_one(
     metrics_path: Path,
 ) -> dict[str, Any]:
     task_cfg = _task_config(params=params, spec=spec)
+    unavailability = model_unavailability_reason(spec.model)
+    if unavailability:
+        skipped = _skipped_record(spec=spec, task_cfg=task_cfg, reason=unavailability)
+        write_json(skipped, metrics_path)
+        return skipped
+
     train = load_processed_split(processed_dir, "train")
     val = load_processed_split(processed_dir, "val")
     if spec.task == "cause":
@@ -193,6 +229,7 @@ def _run_one(
         else multiclass_metrics(model, X_val, y_val)
     )
     metrics = {
+        "status": "completed",
         "task": spec.task,
         "model": spec.model,
         "feature_set": spec.feature_set.value,
@@ -223,6 +260,7 @@ def _run_one(
             )
 
     return {
+        "status": "completed",
         "task": spec.task,
         "feature_set": spec.feature_set.value,
         "model": spec.model,
@@ -230,6 +268,28 @@ def _run_one(
         "val_rows": len(val),
         "train_time_seconds": float(train_time),
         "metrics": metric_values,
+    }
+
+
+def _skipped_record(
+    *,
+    spec: ExperimentSpec,
+    task_cfg: dict[str, Any],
+    reason: str,
+) -> dict[str, Any]:
+    compact_reason = _compact_reason(reason)
+    return {
+        "status": "skipped",
+        "skip_reason": compact_reason,
+        "skip_reason_full": reason,
+        "task": spec.task,
+        "feature_set": spec.feature_set.value,
+        "model": spec.model,
+        "target": task_cfg["target"],
+        "train_rows": 0,
+        "val_rows": 0,
+        "train_time_seconds": 0.0,
+        "metrics": {},
     }
 
 
@@ -264,6 +324,8 @@ def _write_csv(records: list[dict[str, Any]], path: Path) -> None:
         "task",
         "feature_set",
         "model",
+        "status",
+        "skip_reason",
         "train_rows",
         "val_rows",
         "train_time_seconds",
@@ -287,6 +349,8 @@ def _flat_record(record: dict[str, Any]) -> dict[str, Any]:
         "task": record["task"],
         "feature_set": record["feature_set"],
         "model": record["model"],
+        "status": record.get("status", "completed"),
+        "skip_reason": record.get("skip_reason", ""),
         "train_rows": record["train_rows"],
         "val_rows": record["val_rows"],
         "train_time_seconds": round(record["train_time_seconds"], 4),
@@ -329,14 +393,31 @@ def _render_summary(records: list[dict[str, Any]]) -> str:
             "",
             _markdown_table(
                 binary_feature_rows,
-                columns=["feature_set", "model", "f1", "roc_auc", "pr_auc", "accuracy"],
+                columns=[
+                    "feature_set",
+                    "model",
+                    "status",
+                    "f1",
+                    "roc_auc",
+                    "pr_auc",
+                    "accuracy",
+                    "skip_reason",
+                ],
             ),
             "",
             "### Cause Classifier",
             "",
             _markdown_table(
                 cause_feature_rows,
-                columns=["feature_set", "model", "macro_f1", "weighted_f1", "accuracy"],
+                columns=[
+                    "feature_set",
+                    "model",
+                    "status",
+                    "macro_f1",
+                    "weighted_f1",
+                    "accuracy",
+                    "skip_reason",
+                ],
             ),
             "",
             "## Experiment 5.2 - Model Comparison",
@@ -347,26 +428,45 @@ def _render_summary(records: list[dict[str, Any]]) -> str:
             "",
             _markdown_table(
                 binary_model_rows,
-                columns=["model", "feature_set", "f1", "roc_auc", "pr_auc", "accuracy"],
+                columns=[
+                    "model",
+                    "feature_set",
+                    "status",
+                    "f1",
+                    "roc_auc",
+                    "pr_auc",
+                    "accuracy",
+                    "skip_reason",
+                ],
             ),
             "",
             "### Cause Classifier",
             "",
             _markdown_table(
                 cause_model_rows,
-                columns=["model", "feature_set", "macro_f1", "weighted_f1", "accuracy"],
+                columns=[
+                    "model",
+                    "feature_set",
+                    "status",
+                    "macro_f1",
+                    "weighted_f1",
+                    "accuracy",
+                    "skip_reason",
+                ],
             ),
             "",
             "## Current Best",
             "",
             _best_line(binary_feature_rows, metric="f1", label="Binary F1 by feature set"),
-            _best_line(cause_feature_rows, metric="macro_f1", label="Cause macro-F1 by feature set"),
+            _best_line(
+                cause_feature_rows, metric="macro_f1", label="Cause macro-F1 by feature set"
+            ),
             _best_line(binary_model_rows, metric="f1", label="Binary F1 by model"),
             _best_line(cause_model_rows, metric="macro_f1", label="Cause macro-F1 by model"),
             "",
             "## Next Experiments",
             "",
-            "- Add CatBoost, LightGBM, and XGBoost when the Python environment has compatible wheels.",
+            "- Install macOS `libomp` to unlock XGBoost and LightGBM runs in this environment.",
             "- Run Optuna tuning for top models.",
             "- Run imbalance and one-stage-vs-two-stage cause-classification experiments.",
             "- Add SHAP and concept-drift reports.",
@@ -391,7 +491,10 @@ def _markdown_table(records: list[dict[str, Any]], columns: list[str]) -> str:
 def _best_line(records: list[dict[str, Any]], *, metric: str, label: str) -> str:
     if not records:
         return f"- {label}: no runs."
-    best = max(records, key=lambda r: float(r["metrics"].get(metric, float("-inf"))))
+    completed = [record for record in records if record.get("status") == "completed"]
+    if not completed:
+        return f"- {label}: no completed runs."
+    best = max(completed, key=lambda r: float(r["metrics"].get(metric, float("-inf"))))
     return (
         f"- {label}: `{best['model']}` + `{best['feature_set']}` "
         f"= {_format_value(best['metrics'][metric])}."
@@ -404,6 +507,13 @@ def _format_value(value: Any) -> str:
     if isinstance(value, float):
         return f"{value:.4f}"
     return str(value)
+
+
+def _compact_reason(reason: str, *, max_len: int = 220) -> str:
+    compact = " ".join(reason.split())
+    if len(compact) <= max_len:
+        return compact
+    return compact[: max_len - 3] + "..."
 
 
 def _parse_args() -> argparse.Namespace:

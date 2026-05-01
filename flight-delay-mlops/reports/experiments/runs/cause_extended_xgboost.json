@@ -1,0 +1,13 @@
+{
+  "status": "skipped",
+  "skip_reason": "XGBoostError: XGBoost Library (libxgboost.dylib) could not be loaded. Likely causes: * OpenMP runtime is not installed - vcomp140.dll or libgomp-1.dll for Windows - libomp.dylib for Mac OSX - libgomp.so for Linux and ...",
+  "skip_reason_full": "XGBoostError: \nXGBoost Library (libxgboost.dylib) could not be loaded.\nLikely causes:\n  * OpenMP runtime is not installed\n    - vcomp140.dll or libgomp-1.dll for Windows\n    - libomp.dylib for Mac OSX\n    - libgomp.so for Linux and other UNIX-like OSes\n    Mac OSX users: Run `brew install libomp` to install OpenMP runtime.\n\n  * You are running 32-bit Python on a 64-bit OS\n\nError message(s): [\"dlopen(/Users/georgij/Projects/ВКР/flight-delay-mlops/.venv/lib/python3.13/site-packages/xgboost/lib/libxgboost.dylib, 0x0006): Library not loaded: @rpath/libomp.dylib\\n  Referenced from: <1A0D8152-BF46-3BE0-B651-EE965C187777> /Users/georgij/Projects/ВКР/flight-delay-mlops/.venv/lib/python3.13/site-packages/xgboost/lib/libxgboost.dylib\\n  Reason: tried: '/opt/homebrew/opt/libomp/lib/libomp.dylib' (no such file), '/System/Volumes/Preboot/Cryptexes/OS/opt/homebrew/opt/libomp/lib/libomp.dylib' (no such file), '/opt/homebrew/opt/libomp/lib/libomp.dylib' (no such file), '/System/Volumes/Preboot/Cryptexes/OS/opt/homebrew/opt/libomp/lib/libomp.dylib' (no such file)\"]\n",
+  "task": "cause",
+  "feature_set": "EXTENDED",
+  "model": "xgboost",
+  "target": "probable_delay_cause",
+  "train_rows": 0,
+  "val_rows": 0,
+  "train_time_seconds": 0.0,
+  "metrics": {}
+}

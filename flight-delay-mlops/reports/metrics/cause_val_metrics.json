@@ -5,7 +5,7 @@
   "feature_set": "EXTENDED",
   "train_rows": 17457,
   "val_rows": 17586,
-  "train_time_seconds": 1.557521333990735,
+  "train_time_seconds": 1.5487264169933042,
   "val": {
     "labels": [
       "airport_congestion",

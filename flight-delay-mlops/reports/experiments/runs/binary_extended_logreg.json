@@ -1,11 +1,12 @@
 {
+  "status": "completed",
   "task": "binary",
   "model": "logreg",
   "feature_set": "EXTENDED",
   "target": "is_departure_delayed_15m",
   "train_rows": 72778,
   "val_rows": 73095,
-  "train_time_seconds": 2.4202754579891916,
+  "train_time_seconds": 2.403861832994153,
   "val": {
     "labels": [
       0,

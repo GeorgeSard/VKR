@@ -1,11 +1,12 @@
 {
+  "status": "completed",
   "task": "binary",
   "model": "random_forest",
   "feature_set": "EXTENDED",
   "target": "is_departure_delayed_15m",
   "train_rows": 72778,
   "val_rows": 73095,
-  "train_time_seconds": 2.4346753749996424,
+  "train_time_seconds": 2.2146385829983046,
   "val": {
     "labels": [
       0,
