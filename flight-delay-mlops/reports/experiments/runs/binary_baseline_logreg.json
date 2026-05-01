@@ -1,0 +1,31 @@
+{
+  "task": "binary",
+  "model": "logreg",
+  "feature_set": "BASELINE",
+  "target": "is_departure_delayed_15m",
+  "train_rows": 72778,
+  "val_rows": 73095,
+  "train_time_seconds": 1.6905126250057947,
+  "val": {
+    "labels": [
+      0,
+      1
+    ],
+    "accuracy": 0.780121759354265,
+    "precision": 0.5332367404285212,
+    "recall": 0.6906061639940863,
+    "f1": 0.6018036767256331,
+    "roc_auc": 0.8229332680274298,
+    "pr_auc": 0.6995323256188642,
+    "confusion_matrix": [
+      [
+        44878,
+        10631
+      ],
+      [
+        5441,
+        12145
+      ]
+    ]
+  }
+}

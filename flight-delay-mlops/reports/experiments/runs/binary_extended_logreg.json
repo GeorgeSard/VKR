@@ -1,11 +1,11 @@
 {
-  "task": "binary_delay",
+  "task": "binary",
   "model": "logreg",
-  "target": "is_departure_delayed_15m",
   "feature_set": "EXTENDED",
+  "target": "is_departure_delayed_15m",
   "train_rows": 72778,
   "val_rows": 73095,
-  "train_time_seconds": 2.4089699579926673,
+  "train_time_seconds": 2.4202754579891916,
   "val": {
     "labels": [
       0,

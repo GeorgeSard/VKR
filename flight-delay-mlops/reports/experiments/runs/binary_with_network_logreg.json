@@ -1,0 +1,31 @@
+{
+  "task": "binary",
+  "model": "logreg",
+  "feature_set": "WITH_NETWORK",
+  "target": "is_departure_delayed_15m",
+  "train_rows": 72778,
+  "val_rows": 73095,
+  "train_time_seconds": 7.766050541991717,
+  "val": {
+    "labels": [
+      0,
+      1
+    ],
+    "accuracy": 0.7871400232574047,
+    "precision": 0.5462215533360697,
+    "recall": 0.6810531104287502,
+    "f1": 0.6062308607293801,
+    "roc_auc": 0.8246058805262433,
+    "pr_auc": 0.7015114631441907,
+    "confusion_matrix": [
+      [
+        45559,
+        9950
+      ],
+      [
+        5609,
+        11977
+      ]
+    ]
+  }
+}

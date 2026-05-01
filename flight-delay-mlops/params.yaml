@@ -52,3 +52,4 @@ mlflow:
   tracking_uri: sqlite:///mlflow.db
   experiment_binary: flight-delay-binary
   experiment_cause: flight-delay-cause
+  experiment_experiments: flight-delay-experiments

@@ -1,0 +1,103 @@
+{
+  "task": "cause",
+  "model": "random_forest",
+  "feature_set": "EXTENDED",
+  "target": "probable_delay_cause",
+  "train_rows": 17457,
+  "val_rows": 17586,
+  "train_time_seconds": 0.4427503750048345,
+  "val": {
+    "labels": [
+      "airport_congestion",
+      "carrier_operational",
+      "reactionary",
+      "security",
+      "weather"
+    ],
+    "accuracy": 0.7592971682019789,
+    "macro_f1": 0.6134386435685502,
+    "weighted_f1": 0.754524746825407,
+    "confusion_matrix": [
+      [
+        2541,
+        98,
+        75,
+        1,
+        40
+      ],
+      [
+        789,
+        3677,
+        210,
+        58,
+        948
+      ],
+      [
+        168,
+        65,
+        2059,
+        1,
+        366
+      ],
+      [
+        42,
+        175,
+        11,
+        5,
+        52
+      ],
+      [
+        440,
+        86,
+        605,
+        3,
+        5071
+      ]
+    ],
+    "classification_report": {
+      "airport_congestion": {
+        "precision": 0.6384422110552764,
+        "recall": 0.9223230490018148,
+        "f1-score": 0.75456570155902,
+        "support": 2755.0
+      },
+      "carrier_operational": {
+        "precision": 0.8966105827846866,
+        "recall": 0.6471312917986625,
+        "f1-score": 0.7517121537360728,
+        "support": 5682.0
+      },
+      "reactionary": {
+        "precision": 0.6956081081081081,
+        "recall": 0.7743512598721324,
+        "f1-score": 0.7328706175476063,
+        "support": 2659.0
+      },
+      "security": {
+        "precision": 0.07352941176470588,
+        "recall": 0.017543859649122806,
+        "f1-score": 0.028328611898016998,
+        "support": 285.0
+      },
+      "weather": {
+        "precision": 0.782924193299367,
+        "recall": 0.8172441579371474,
+        "f1-score": 0.7997161331020344,
+        "support": 6205.0
+      },
+      "accuracy": 0.7592971682019789,
+      "macro avg": {
+        "precision": 0.6174229014024288,
+        "recall": 0.635718723651776,
+        "f1-score": 0.6134386435685502,
+        "support": 17586.0
+      },
+      "weighted avg": {
+        "precision": 0.7723229889727538,
+        "recall": 0.7592971682019789,
+        "f1-score": 0.754524746825407,
+        "support": 17586.0
+      }
+    }
+  }
+}

@@ -1,0 +1,674 @@
+{
+  "runs": [
+    {
+      "experiment_group": "5.1_feature_sets",
+      "task": "binary",
+      "feature_set": "BASELINE",
+      "model": "logreg",
+      "train_rows": 72778,
+      "val_rows": 73095,
+      "train_time_seconds": 1.6905126250057947,
+      "metrics": {
+        "labels": [
+          0,
+          1
+        ],
+        "accuracy": 0.780121759354265,
+        "precision": 0.5332367404285212,
+        "recall": 0.6906061639940863,
+        "f1": 0.6018036767256331,
+        "roc_auc": 0.8229332680274298,
+        "pr_auc": 0.6995323256188642,
+        "confusion_matrix": [
+          [
+            44878,
+            10631
+          ],
+          [
+            5441,
+            12145
+          ]
+        ]
+      }
+    },
+    {
+      "experiment_group": "5.1_feature_sets",
+      "task": "cause",
+      "feature_set": "BASELINE",
+      "model": "logreg",
+      "train_rows": 17457,
+      "val_rows": 17586,
+      "train_time_seconds": 1.219015209004283,
+      "metrics": {
+        "labels": [
+          "airport_congestion",
+          "carrier_operational",
+          "reactionary",
+          "security",
+          "weather"
+        ],
+        "accuracy": 0.734277266007051,
+        "macro_f1": 0.6126341343240232,
+        "weighted_f1": 0.7400498302340485,
+        "confusion_matrix": [
+          [
+            2440,
+            111,
+            70,
+            30,
+            104
+          ],
+          [
+            846,
+            3436,
+            171,
+            359,
+            870
+          ],
+          [
+            153,
+            79,
+            2087,
+            23,
+            317
+          ],
+          [
+            49,
+            154,
+            9,
+            32,
+            41
+          ],
+          [
+            370,
+            158,
+            545,
+            214,
+            4918
+          ]
+        ],
+        "classification_report": {
+          "airport_congestion": {
+            "precision": 0.6324520476931053,
+            "recall": 0.8856624319419237,
+            "f1-score": 0.7379404203840919,
+            "support": 2755.0
+          },
+          "carrier_operational": {
+            "precision": 0.8725241239207719,
+            "recall": 0.6047166490672299,
+            "f1-score": 0.7143451143451144,
+            "support": 5682.0
+          },
+          "reactionary": {
+            "precision": 0.7241498959056211,
+            "recall": 0.7848815344114328,
+            "f1-score": 0.7532936293087891,
+            "support": 2659.0
+          },
+          "security": {
+            "precision": 0.0486322188449848,
+            "recall": 0.11228070175438597,
+            "f1-score": 0.06786850477200425,
+            "support": 285.0
+          },
+          "weather": {
+            "precision": 0.78688,
+            "recall": 0.7925866236905721,
+            "f1-score": 0.7897230028101164,
+            "support": 6205.0
+          },
+          "accuracy": 0.734277266007051,
+          "macro avg": {
+            "precision": 0.6129276572728967,
+            "recall": 0.6360255881731088,
+            "f1-score": 0.6126341343240232,
+            "support": 17586.0
+          },
+          "weighted avg": {
+            "precision": 0.7689100772828499,
+            "recall": 0.734277266007051,
+            "f1-score": 0.7400498302340485,
+            "support": 17586.0
+          }
+        }
+      }
+    },
+    {
+      "experiment_group": "5.1_feature_sets",
+      "task": "binary",
+      "feature_set": "EXTENDED",
+      "model": "logreg",
+      "train_rows": 72778,
+      "val_rows": 73095,
+      "train_time_seconds": 2.4202754579891916,
+      "metrics": {
+        "labels": [
+          0,
+          1
+        ],
+        "accuracy": 0.7802175251385184,
+        "precision": 0.5333596525858666,
+        "recall": 0.6914022517911975,
+        "f1": 0.6021840873634945,
+        "roc_auc": 0.8234257749140146,
+        "pr_auc": 0.6999434659726643,
+        "confusion_matrix": [
+          [
+            44871,
+            10638
+          ],
+          [
+            5427,
+            12159
+          ]
+        ]
+      }
+    },
+    {
+      "experiment_group": "5.1_feature_sets",
+      "task": "cause",
+      "feature_set": "EXTENDED",
+      "model": "logreg",
+      "train_rows": 17457,
+      "val_rows": 17586,
+      "train_time_seconds": 1.549282874999335,
+      "metrics": {
+        "labels": [
+          "airport_congestion",
+          "carrier_operational",
+          "reactionary",
+          "security",
+          "weather"
+        ],
+        "accuracy": 0.7333105879677015,
+        "macro_f1": 0.6110049265889254,
+        "weighted_f1": 0.739393985565399,
+        "confusion_matrix": [
+          [
+            2441,
+            117,
+            67,
+            31,
+            99
+          ],
+          [
+            854,
+            3443,
+            168,
+            361,
+            856
+          ],
+          [
+            161,
+            82,
+            2076,
+            23,
+            317
+          ],
+          [
+            49,
+            156,
+            9,
+            30,
+            41
+          ],
+          [
+            369,
+            165,
+            544,
+            221,
+            4906
+          ]
+        ],
+        "classification_report": {
+          "airport_congestion": {
+            "precision": 0.6300980898296334,
+            "recall": 0.8860254083484573,
+            "f1-score": 0.7364610046764218,
+            "support": 2755.0
+          },
+          "carrier_operational": {
+            "precision": 0.8687862730254857,
+            "recall": 0.6059486096444914,
+            "f1-score": 0.7139450492483151,
+            "support": 5682.0
+          },
+          "reactionary": {
+            "precision": 0.7248603351955307,
+            "recall": 0.780744640842422,
+            "f1-score": 0.7517653449212385,
+            "support": 2659.0
+          },
+          "security": {
+            "precision": 0.04504504504504504,
+            "recall": 0.10526315789473684,
+            "f1-score": 0.06309148264984227,
+            "support": 285.0
+          },
+          "weather": {
+            "precision": 0.7888728091333012,
+            "recall": 0.7906526994359387,
+            "f1-score": 0.7897617514488088,
+            "support": 6205.0
+          },
+          "accuracy": 0.7333105879677015,
+          "macro avg": {
+            "precision": 0.6115325104457993,
+            "recall": 0.6337269032332092,
+            "f1-score": 0.6110049265889254,
+            "support": 17586.0
+          },
+          "weighted avg": {
+            "precision": 0.7680860394976878,
+            "recall": 0.7333105879677015,
+            "f1-score": 0.739393985565399,
+            "support": 17586.0
+          }
+        }
+      }
+    },
+    {
+      "experiment_group": "5.1_feature_sets",
+      "task": "binary",
+      "feature_set": "WITH_NETWORK",
+      "model": "logreg",
+      "train_rows": 72778,
+      "val_rows": 73095,
+      "train_time_seconds": 7.766050541991717,
+      "metrics": {
+        "labels": [
+          0,
+          1
+        ],
+        "accuracy": 0.7871400232574047,
+        "precision": 0.5462215533360697,
+        "recall": 0.6810531104287502,
+        "f1": 0.6062308607293801,
+        "roc_auc": 0.8246058805262433,
+        "pr_auc": 0.7015114631441907,
+        "confusion_matrix": [
+          [
+            45559,
+            9950
+          ],
+          [
+            5609,
+            11977
+          ]
+        ]
+      }
+    },
+    {
+      "experiment_group": "5.1_feature_sets",
+      "task": "cause",
+      "feature_set": "WITH_NETWORK",
+      "model": "logreg",
+      "train_rows": 17457,
+      "val_rows": 17586,
+      "train_time_seconds": 2.305841458000941,
+      "metrics": {
+        "labels": [
+          "airport_congestion",
+          "carrier_operational",
+          "reactionary",
+          "security",
+          "weather"
+        ],
+        "accuracy": 0.711304446718981,
+        "macro_f1": 0.598690284216498,
+        "weighted_f1": 0.7240136028117375,
+        "confusion_matrix": [
+          [
+            2398,
+            138,
+            70,
+            54,
+            95
+          ],
+          [
+            844,
+            3339,
+            172,
+            548,
+            779
+          ],
+          [
+            161,
+            92,
+            2059,
+            24,
+            323
+          ],
+          [
+            51,
+            152,
+            9,
+            35,
+            38
+          ],
+          [
+            376,
+            247,
+            539,
+            365,
+            4678
+          ]
+        ],
+        "classification_report": {
+          "airport_congestion": {
+            "precision": 0.6261096605744125,
+            "recall": 0.8704174228675136,
+            "f1-score": 0.7283219438116932,
+            "support": 2755.0
+          },
+          "carrier_operational": {
+            "precision": 0.8414818548387096,
+            "recall": 0.5876451953537487,
+            "f1-score": 0.692020725388601,
+            "support": 5682.0
+          },
+          "reactionary": {
+            "precision": 0.7227097227097227,
+            "recall": 0.7743512598721324,
+            "f1-score": 0.7476397966594045,
+            "support": 2659.0
+          },
+          "security": {
+            "precision": 0.0341130604288499,
+            "recall": 0.12280701754385964,
+            "f1-score": 0.05339435545385202,
+            "support": 285.0
+          },
+          "weather": {
+            "precision": 0.7911381701336039,
+            "recall": 0.753908138597905,
+            "f1-score": 0.7720745997689388,
+            "support": 6205.0
+          },
+          "accuracy": 0.711304446718981,
+          "macro avg": {
+            "precision": 0.6031104937370597,
+            "recall": 0.6218258068470318,
+            "f1-score": 0.598690284216498,
+            "support": 17586.0
+          },
+          "weighted avg": {
+            "precision": 0.7589361841614035,
+            "recall": 0.711304446718981,
+            "f1-score": 0.7240136028117375,
+            "support": 17586.0
+          }
+        }
+      }
+    },
+    {
+      "experiment_group": "5.2_model_comparison",
+      "task": "binary",
+      "feature_set": "EXTENDED",
+      "model": "logreg",
+      "train_rows": 72778,
+      "val_rows": 73095,
+      "train_time_seconds": 2.4202754579891916,
+      "metrics": {
+        "labels": [
+          0,
+          1
+        ],
+        "accuracy": 0.7802175251385184,
+        "precision": 0.5333596525858666,
+        "recall": 0.6914022517911975,
+        "f1": 0.6021840873634945,
+        "roc_auc": 0.8234257749140146,
+        "pr_auc": 0.6999434659726643,
+        "confusion_matrix": [
+          [
+            44871,
+            10638
+          ],
+          [
+            5427,
+            12159
+          ]
+        ]
+      }
+    },
+    {
+      "experiment_group": "5.2_model_comparison",
+      "task": "cause",
+      "feature_set": "EXTENDED",
+      "model": "logreg",
+      "train_rows": 17457,
+      "val_rows": 17586,
+      "train_time_seconds": 1.549282874999335,
+      "metrics": {
+        "labels": [
+          "airport_congestion",
+          "carrier_operational",
+          "reactionary",
+          "security",
+          "weather"
+        ],
+        "accuracy": 0.7333105879677015,
+        "macro_f1": 0.6110049265889254,
+        "weighted_f1": 0.739393985565399,
+        "confusion_matrix": [
+          [
+            2441,
+            117,
+            67,
+            31,
+            99
+          ],
+          [
+            854,
+            3443,
+            168,
+            361,
+            856
+          ],
+          [
+            161,
+            82,
+            2076,
+            23,
+            317
+          ],
+          [
+            49,
+            156,
+            9,
+            30,
+            41
+          ],
+          [
+            369,
+            165,
+            544,
+            221,
+            4906
+          ]
+        ],
+        "classification_report": {
+          "airport_congestion": {
+            "precision": 0.6300980898296334,
+            "recall": 0.8860254083484573,
+            "f1-score": 0.7364610046764218,
+            "support": 2755.0
+          },
+          "carrier_operational": {
+            "precision": 0.8687862730254857,
+            "recall": 0.6059486096444914,
+            "f1-score": 0.7139450492483151,
+            "support": 5682.0
+          },
+          "reactionary": {
+            "precision": 0.7248603351955307,
+            "recall": 0.780744640842422,
+            "f1-score": 0.7517653449212385,
+            "support": 2659.0
+          },
+          "security": {
+            "precision": 0.04504504504504504,
+            "recall": 0.10526315789473684,
+            "f1-score": 0.06309148264984227,
+            "support": 285.0
+          },
+          "weather": {
+            "precision": 0.7888728091333012,
+            "recall": 0.7906526994359387,
+            "f1-score": 0.7897617514488088,
+            "support": 6205.0
+          },
+          "accuracy": 0.7333105879677015,
+          "macro avg": {
+            "precision": 0.6115325104457993,
+            "recall": 0.6337269032332092,
+            "f1-score": 0.6110049265889254,
+            "support": 17586.0
+          },
+          "weighted avg": {
+            "precision": 0.7680860394976878,
+            "recall": 0.7333105879677015,
+            "f1-score": 0.739393985565399,
+            "support": 17586.0
+          }
+        }
+      }
+    },
+    {
+      "experiment_group": "5.2_model_comparison",
+      "task": "binary",
+      "feature_set": "EXTENDED",
+      "model": "random_forest",
+      "train_rows": 72778,
+      "val_rows": 73095,
+      "train_time_seconds": 2.4346753749996424,
+      "metrics": {
+        "labels": [
+          0,
+          1
+        ],
+        "accuracy": 0.7810520555441549,
+        "precision": 0.5323967889908257,
+        "recall": 0.7391675196178779,
+        "f1": 0.618970525213085,
+        "roc_auc": 0.8295039252105137,
+        "pr_auc": 0.6995373712380598,
+        "confusion_matrix": [
+          [
+            44092,
+            11417
+          ],
+          [
+            4587,
+            12999
+          ]
+        ]
+      }
+    },
+    {
+      "experiment_group": "5.2_model_comparison",
+      "task": "cause",
+      "feature_set": "EXTENDED",
+      "model": "random_forest",
+      "train_rows": 17457,
+      "val_rows": 17586,
+      "train_time_seconds": 0.4427503750048345,
+      "metrics": {
+        "labels": [
+          "airport_congestion",
+          "carrier_operational",
+          "reactionary",
+          "security",
+          "weather"
+        ],
+        "accuracy": 0.7592971682019789,
+        "macro_f1": 0.6134386435685502,
+        "weighted_f1": 0.754524746825407,
+        "confusion_matrix": [
+          [
+            2541,
+            98,
+            75,
+            1,
+            40
+          ],
+          [
+            789,
+            3677,
+            210,
+            58,
+            948
+          ],
+          [
+            168,
+            65,
+            2059,
+            1,
+            366
+          ],
+          [
+            42,
+            175,
+            11,
+            5,
+            52
+          ],
+          [
+            440,
+            86,
+            605,
+            3,
+            5071
+          ]
+        ],
+        "classification_report": {
+          "airport_congestion": {
+            "precision": 0.6384422110552764,
+            "recall": 0.9223230490018148,
+            "f1-score": 0.75456570155902,
+            "support": 2755.0
+          },
+          "carrier_operational": {
+            "precision": 0.8966105827846866,
+            "recall": 0.6471312917986625,
+            "f1-score": 0.7517121537360728,
+            "support": 5682.0
+          },
+          "reactionary": {
+            "precision": 0.6956081081081081,
+            "recall": 0.7743512598721324,
+            "f1-score": 0.7328706175476063,
+            "support": 2659.0
+          },
+          "security": {
+            "precision": 0.07352941176470588,
+            "recall": 0.017543859649122806,
+            "f1-score": 0.028328611898016998,
+            "support": 285.0
+          },
+          "weather": {
+            "precision": 0.782924193299367,
+            "recall": 0.8172441579371474,
+            "f1-score": 0.7997161331020344,
+            "support": 6205.0
+          },
+          "accuracy": 0.7592971682019789,
+          "macro avg": {
+            "precision": 0.6174229014024288,
+            "recall": 0.635718723651776,
+            "f1-score": 0.6134386435685502,
+            "support": 17586.0
+          },
+          "weighted avg": {
+            "precision": 0.7723229889727538,
+            "recall": 0.7592971682019789,
+            "f1-score": 0.754524746825407,
+            "support": 17586.0
+          }
+        }
+      }
+    }
+  ]
+}

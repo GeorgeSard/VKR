@@ -9,8 +9,8 @@ stages:
       size: 12314449
     - path: params.yaml
       hash: md5
-      md5: c7b74b590b7e04f9bd0056ed28d94469
-      size: 1456
+      md5: e40ec1c3b7c6a6d33d00e33d5c304d37
+      size: 1507
     - path: src/data/load.py
       hash: md5
       md5: 4e49dd6450515bd725aa198039924b3f
@@ -41,8 +41,8 @@ stages:
       size: 12320444
     - path: params.yaml
       hash: md5
-      md5: c7b74b590b7e04f9bd0056ed28d94469
-      size: 1456
+      md5: e40ec1c3b7c6a6d33d00e33d5c304d37
+      size: 1507
     - path: src/data/split.py
       hash: md5
       md5: 7fba7780bce606646651f8d4a8c4b14e
@@ -76,12 +76,12 @@ stages:
       nfiles: 3
     - path: params.yaml
       hash: md5
-      md5: c7b74b590b7e04f9bd0056ed28d94469
-      size: 1456
+      md5: e40ec1c3b7c6a6d33d00e33d5c304d37
+      size: 1507
     - path: src/features/build.py
       hash: md5
-      md5: 578fb6c99eb74672da5209ac8615d691
-      size: 7549
+      md5: 3af2f202e10cd22ee981dc79791ab0c0
+      size: 7664
     - path: src/features/feature_sets.py
       hash: md5
       md5: 86b732892a41c8f5cfe593b5a92fb3b4
@@ -111,12 +111,12 @@ stages:
       nfiles: 3
     - path: params.yaml
       hash: md5
-      md5: c7b74b590b7e04f9bd0056ed28d94469
-      size: 1456
+      md5: e40ec1c3b7c6a6d33d00e33d5c304d37
+      size: 1507
     - path: src/models/common.py
       hash: md5
-      md5: 50dea3f4153a46e3a367242d7c1ecc2c
-      size: 6358
+      md5: c9204dd946cfc11658cd3a25ce06f288
+      size: 6341
     - path: src/models/tracking.py
       hash: md5
       md5: c0a9369d10b4bf1675839df846d99a52
@@ -133,6 +133,7 @@ stages:
           tracking_uri: sqlite:///mlflow.db
           experiment_binary: flight-delay-binary
           experiment_cause: flight-delay-cause
+          experiment_experiments: flight-delay-experiments
         seed: 42
         train_binary:
           model: logreg
@@ -149,7 +150,7 @@ stages:
       size: 11734
     - path: reports/metrics/binary_val_metrics.json
       hash: md5
-      md5: 84e97553f05beb530d80903afd572658
+      md5: 9c755c5282e433307057ed6da697f22b
       size: 590
   train_cause:
     cmd: python -m src.models.train_cause --params params.yaml
@@ -161,16 +162,16 @@ stages:
       nfiles: 3
     - path: params.yaml
       hash: md5
-      md5: c7b74b590b7e04f9bd0056ed28d94469
-      size: 1456
+      md5: e40ec1c3b7c6a6d33d00e33d5c304d37
+      size: 1507
     - path: src/data/split.py
       hash: md5
       md5: 7fba7780bce606646651f8d4a8c4b14e
       size: 5170
     - path: src/models/common.py
       hash: md5
-      md5: 50dea3f4153a46e3a367242d7c1ecc2c
-      size: 6358
+      md5: c9204dd946cfc11658cd3a25ce06f288
+      size: 6341
     - path: src/models/tracking.py
       hash: md5
       md5: c0a9369d10b4bf1675839df846d99a52
@@ -187,6 +188,7 @@ stages:
           tracking_uri: sqlite:///mlflow.db
           experiment_binary: flight-delay-binary
           experiment_cause: flight-delay-cause
+          experiment_experiments: flight-delay-experiments
         seed: 42
         train_cause:
           model: logreg
@@ -209,8 +211,8 @@ stages:
       size: 18865
     - path: reports/metrics/cause_val_metrics.json
       hash: md5
-      md5: 781bc76a9579f4bed3d6bb8bbe7f67cc
-      size: 2215
+      md5: 594ada664f9e32e58262e90dbc18ebe7
+      size: 2214
   evaluate:
     cmd: python -m src.models.evaluate --params params.yaml
     deps:
@@ -229,16 +231,16 @@ stages:
       size: 18865
     - path: params.yaml
       hash: md5
-      md5: c7b74b590b7e04f9bd0056ed28d94469
-      size: 1456
+      md5: e40ec1c3b7c6a6d33d00e33d5c304d37
+      size: 1507
     - path: src/data/split.py
       hash: md5
       md5: 7fba7780bce606646651f8d4a8c4b14e
       size: 5170
     - path: src/models/common.py
       hash: md5
-      md5: 50dea3f4153a46e3a367242d7c1ecc2c
-      size: 6358
+      md5: c9204dd946cfc11658cd3a25ce06f288
+      size: 6341
     - path: src/models/evaluate.py
       hash: md5
       md5: f802e6efbb0b15b84df15df4ae8929cb
@@ -255,3 +257,66 @@ stages:
       hash: md5
       md5: 66704ffcc33d79c62f46f839df97a2ed
       size: 2825
+  experiments_baseline:
+    cmd: python -m src.experiments.run_baselines --params params.yaml
+    deps:
+    - path: data/interim/splits
+      hash: md5
+      md5: ed25fec8e2fefe65d27a9c657bb2ee67.dir
+      size: 13099361
+      nfiles: 3
+    - path: params.yaml
+      hash: md5
+      md5: e40ec1c3b7c6a6d33d00e33d5c304d37
+      size: 1507
+    - path: src/experiments/run_baselines.py
+      hash: md5
+      md5: 34ed1f076591c2125ccf116a2c9cfc1b
+      size: 14045
+    - path: src/features/build.py
+      hash: md5
+      md5: 3af2f202e10cd22ee981dc79791ab0c0
+      size: 7664
+    - path: src/features/feature_sets.py
+      hash: md5
+      md5: 86b732892a41c8f5cfe593b5a92fb3b4
+      size: 4966
+    - path: src/models/common.py
+      hash: md5
+      md5: c9204dd946cfc11658cd3a25ce06f288
+      size: 6341
+    - path: src/models/tracking.py
+      hash: md5
+      md5: c0a9369d10b4bf1675839df846d99a52
+      size: 4331
+    params:
+      params.yaml:
+        mlflow:
+          enabled: true
+          tracking_uri: sqlite:///mlflow.db
+          experiment_binary: flight-delay-binary
+          experiment_cause: flight-delay-cause
+          experiment_experiments: flight-delay-experiments
+        seed: 42
+        split:
+          train_years:
+          - 2023
+          val_years:
+          - 2024
+          test_years:
+          - 2025
+        train_binary.target: is_departure_delayed_15m
+        train_cause.target: probable_delay_cause
+    outs:
+    - path: reports/experiments/baseline_runs.csv
+      hash: md5
+      md5: 9e6d604613f21ff475ced46c31791124
+      size: 1431
+    - path: reports/experiments/baseline_runs.json
+      hash: md5
+      md5: 99ebcc6a9fe80c8b93efc6a3d1effb89
+      size: 16769
+    - path: reports/experiments_summary.md
+      hash: md5
+      md5: 462c5e6cc04755f735cc346657daa3cb
+      size: 1970

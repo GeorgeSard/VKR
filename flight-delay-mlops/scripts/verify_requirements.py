@@ -21,6 +21,7 @@ def main() -> int:
         ("Time-based split is 2023/2024/2025", check_time_split),
         ("Binary metrics include F1, ROC-AUC, PR-AUC", check_binary_metrics),
         ("Cause metrics include macro-F1", check_cause_metrics),
+        ("Baseline experiment report exists", check_experiment_report),
         ("MLflow tracking produced local runs or server URI is configured", check_mlflow_tracking),
         ("No raw parquet/csv/model binaries are tracked by git", check_git_large_files),
     ]
@@ -94,6 +95,19 @@ def check_cause_metrics() -> tuple[bool, str]:
     return "macro_f1" in metrics, _metric_summary(metrics, ["macro_f1", "weighted_f1"])
 
 
+def check_experiment_report() -> tuple[bool, str]:
+    summary = ROOT / "reports/experiments_summary.md"
+    runs = ROOT / "reports/experiments/baseline_runs.json"
+    if not summary.exists() or not runs.exists():
+        return False, "run `make experiments-baseline`"
+    payload = _read_json(runs)
+    records = payload.get("runs", [])
+    groups = {record.get("experiment_group") for record in records}
+    required = {"5.1_feature_sets", "5.2_model_comparison"}
+    missing = required - groups
+    return not missing, f"runs={len(records)}" if not missing else f"missing={sorted(missing)}"
+
+
 def check_mlflow_tracking() -> tuple[bool, str]:
     local_runs = ROOT / "mlruns"
     if local_runs.exists() and any(local_runs.glob("*/meta.yaml")):
@@ -110,6 +124,7 @@ def check_git_large_files() -> tuple[bool, str]:
     allowed = {
         "flight-delay-mlops/data/raw/flight_delays_ru.parquet.dvc",
         "flight-delay-mlops/data/raw/flight_delays_ru_sample.csv.dvc",
+        "reports/experiments/baseline_runs.csv",
     }
     bad = [
         p

@@ -74,7 +74,7 @@ def build_classifier(
     else:
         raise ValueError(
             f"Unsupported model '{model_name}' for {task}. "
-            "Stage 3 keeps the DVC smoke pipeline on sklearn models: logreg | random_forest."
+            "The current sklearn baseline supports: logreg | random_forest."
         )
 
     return Pipeline(

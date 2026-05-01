@@ -1,4 +1,4 @@
-.PHONY: setup lint test repro repro-force-training status dag mlflow-ui mlflow-up mlflow-down verify
+.PHONY: setup lint test repro repro-force-training experiments-baseline status dag mlflow-ui mlflow-up mlflow-down verify
 
 setup:
 	python3 -m venv .venv
@@ -15,6 +15,9 @@ repro:
 
 repro-force-training:
 	PATH="$(CURDIR)/.venv/bin:$$PATH" DVC_SITE_CACHE_DIR="$(CURDIR)/.cache/dvc" .venv/bin/dvc repro -f train_binary train_cause evaluate
+
+experiments-baseline:
+	PATH="$(CURDIR)/.venv/bin:$$PATH" DVC_SITE_CACHE_DIR="$(CURDIR)/.cache/dvc" .venv/bin/dvc repro experiments_baseline
 
 status:
 	DVC_SITE_CACHE_DIR="$(CURDIR)/.cache/dvc" .venv/bin/dvc status

@@ -89,11 +89,27 @@ make verify
 ```text
 load -> split -> features -> train_binary -> evaluate
                          \-> train_cause  -> evaluate
+             \-> experiments_baseline -> reports/experiments_summary.md
 ```
 
 По умолчанию используется быстрый sklearn-baseline `logreg` на feature set `EXTENDED`. CatBoost/LightGBM/XGBoost выносятся в следующий этап с расширенными MLflow-экспериментами.
 
-### 4. MLflow
+### 4. Эксперименты
+
+Быстрый baseline-срез этапа 5:
+
+```bash
+make experiments-baseline
+```
+
+Артефакты:
+
+- `reports/experiments_summary.md` — человекочитаемый отчёт;
+- `reports/experiments/baseline_runs.json` — структурированные метрики для DVC;
+- `reports/experiments/baseline_runs.csv` — таблица для отчёта/сравнения;
+- MLflow experiment `flight-delay-experiments`.
+
+### 5. MLflow
 
 Локальный режим без Docker:
 
@@ -122,7 +138,7 @@ MLFLOW_TRACKING_URI=http://localhost:5000 make repro-force-training
 make mlflow-down
 ```
 
-### 5. Как понять, что требования выполняются
+### 6. Как понять, что требования выполняются
 
 ```bash
 make verify
@@ -137,6 +153,7 @@ make verify
 - метрики задачи A включают F1, ROC-AUC, PR-AUC;
 - метрики задачи B включают macro-F1;
 - MLflow tracking настроен;
+- отчёт baseline-экспериментов создан;
 - большие артефакты данных/моделей не отслеживаются git.
 
 ---
@@ -189,7 +206,7 @@ flight-delay-mlops/
 - [x] Этап 2 — Feature engineering (3 feature set + leakage tests)
 - [x] Этап 3 — DVC-пайплайн
 - [x] Этап 4 — MLflow + базовое обучение
-- [ ] Этап 5 — Эксперименты (8 шт.)
+- [ ] Этап 5 — Эксперименты (8 шт.; baseline 5.1/5.2 запущен)
 - [ ] Этап 6 — Финальная модель + FastAPI + Docker
 - [ ] Этап 7 — Мониторинг и обратная связь
 - [ ] Этап 8 — End-to-end демонстрация

@@ -141,9 +141,12 @@ def add_network_delay_rate_encodings(frames: dict[str, pd.DataFrame]) -> dict[st
     for column in NETWORK_GROUP_COLUMNS:
         if column not in train.columns:
             continue
-        grouped = train.groupby(column, observed=True)[target].agg(["sum", "count"])
-        sums = train[column].map(grouped["sum"]).astype(float)
-        counts = train[column].map(grouped["count"]).astype(float)
+        train_keys = train[column].astype(str)
+        grouped = train.assign(_network_key=train_keys).groupby("_network_key", observed=True)[
+            target
+        ].agg(["sum", "count"])
+        sums = train_keys.map(grouped["sum"]).astype(float)
+        counts = train_keys.map(grouped["count"]).astype(float)
 
         train_values = (sums - y + prior * smoothing) / (counts - 1 + smoothing)
         encoded["train"][f"te_{column}_delay_rate"] = train_values.astype(float)
@@ -151,7 +154,7 @@ def add_network_delay_rate_encodings(frames: dict[str, pd.DataFrame]) -> dict[st
         mapping = ((grouped["sum"] + prior * smoothing) / (grouped["count"] + smoothing)).to_dict()
         for split in ("val", "test"):
             encoded[split][f"te_{column}_delay_rate"] = (
-                encoded[split][column].map(mapping).fillna(prior).astype(float)
+                encoded[split][column].astype(str).map(mapping).fillna(prior).astype(float)
             )
 
     return encoded

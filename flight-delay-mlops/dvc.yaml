@@ -109,3 +109,28 @@ stages:
     metrics:
       - reports/metrics/test_metrics.json:
           cache: false
+
+  experiments_baseline:
+    cmd: python -m src.experiments.run_baselines --params params.yaml
+    deps:
+      - src/experiments/run_baselines.py
+      - src/features/build.py
+      - src/features/feature_sets.py
+      - src/models/common.py
+      - src/models/tracking.py
+      - ${data.interim_dir}/splits
+      - params.yaml
+    params:
+      - seed
+      - split
+      - train_binary.target
+      - train_cause.target
+      - mlflow
+    outs:
+      - reports/experiments/baseline_runs.csv:
+          cache: false
+      - reports/experiments_summary.md:
+          cache: false
+    metrics:
+      - reports/experiments/baseline_runs.json:
+          cache: false
