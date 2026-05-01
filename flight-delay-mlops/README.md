@@ -92,7 +92,7 @@ load -> split -> features -> train_binary -> evaluate
              \-> experiments_baseline -> reports/experiments_summary.md
 ```
 
-По умолчанию используется быстрый sklearn-baseline `logreg` на feature set `EXTENDED`. CatBoost/LightGBM/XGBoost выносятся в следующий этап с расширенными MLflow-экспериментами.
+Основные train-стадии используют быстрый baseline `logreg` на feature set `EXTENDED`. Экспериментальная стадия 5.1/5.2 сравнивает feature sets и модели `logreg`, `random_forest`, `catboost`; `xgboost` и `lightgbm` подключены как optional backend-и и помечаются `skipped`, если в macOS-окружении не установлен `libomp`.
 
 ### 4. Эксперименты
 
@@ -108,6 +108,13 @@ make experiments-baseline
 - `reports/experiments/baseline_runs.json` — структурированные метрики для DVC;
 - `reports/experiments/baseline_runs.csv` — таблица для отчёта/сравнения;
 - MLflow experiment `flight-delay-experiments`.
+
+Текущий лучший результат в baseline-срезе: `catboost` + `EXTENDED` для бинарной задачи по F1 и `random_forest` + `EXTENDED` для классификации причины по macro-F1. Для запуска XGBoost/LightGBM на macOS сначала установи OpenMP runtime:
+
+```bash
+brew install libomp
+make experiments-baseline
+```
 
 ### 5. MLflow
 
@@ -206,7 +213,7 @@ flight-delay-mlops/
 - [x] Этап 2 — Feature engineering (3 feature set + leakage tests)
 - [x] Этап 3 — DVC-пайплайн
 - [x] Этап 4 — MLflow + базовое обучение
-- [ ] Этап 5 — Эксперименты (8 шт.; baseline 5.1/5.2 запущен)
+- [ ] Этап 5 — Эксперименты (baseline 5.1/5.2 + CatBoost готовы; дальше Optuna, imbalance, SHAP/drift)
 - [ ] Этап 6 — Финальная модель + FastAPI + Docker
 - [ ] Этап 7 — Мониторинг и обратная связь
 - [ ] Этап 8 — End-to-end демонстрация
