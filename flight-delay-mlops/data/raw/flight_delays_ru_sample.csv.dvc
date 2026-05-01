@@ -1,0 +1,5 @@
+outs:
+- md5: 035158f654c4bbc52520f6677a1694a4
+  size: 2045269
+  hash: md5
+  path: flight_delays_ru_sample.csv

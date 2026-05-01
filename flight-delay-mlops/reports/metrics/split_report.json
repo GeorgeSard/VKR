@@ -1,0 +1,17 @@
+{
+  "train_years": [
+    2023
+  ],
+  "val_years": [
+    2024
+  ],
+  "test_years": [
+    2025
+  ],
+  "drop_cancelled": true,
+  "sizes": {
+    "train": 72778,
+    "val": 73095,
+    "test": 72868
+  }
+}

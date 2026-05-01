@@ -1,0 +1,50 @@
+# Central parameter file for the DVC pipeline.
+# Every reproducible run reads from here. Edit -> `dvc repro` reruns affected stages.
+
+seed: 42
+
+data:
+  raw_path: data/raw/flight_delays_ru.parquet
+  interim_dir: data/interim
+  processed_dir: data/processed
+
+split:
+  # Time-based split is mandatory (CLAUDE.md rule 2). NEVER random.
+  train_years: [2023]
+  val_years: [2024]
+  test_years: [2025]
+
+features:
+  # One of: BASELINE, EXTENDED, WITH_NETWORK
+  feature_set: EXTENDED
+
+train_binary:
+  # Stage 1: is_departure_delayed_15m (drops cancellations).
+  model: logreg              # Stage 3 smoke baseline: logreg | random_forest
+  target: is_departure_delayed_15m
+  class_weight: balanced     # null | balanced
+  hyperparams:
+    C: 1.0
+    max_iter: 200
+    solver: liblinear
+
+train_cause:
+  # Stage 2: probable_delay_cause on delayed flights only.
+  model: logreg
+  target: probable_delay_cause
+  classes: [weather, airport_congestion, reactionary, carrier_operational, security]
+  class_weight: balanced
+  hyperparams:
+    C: 1.0
+    max_iter: 200
+    solver: liblinear
+
+tuning:
+  enabled: false
+  n_trials: 50
+  timeout_seconds: 1800
+
+mlflow:
+  tracking_uri: http://localhost:5000
+  experiment_binary: flight-delay-binary
+  experiment_cause: flight-delay-cause

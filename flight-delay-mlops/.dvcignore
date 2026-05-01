@@ -1,0 +1,6 @@
+# Patterns DVC should ignore (matches .gitignore syntax)
+__pycache__/
+*.py[cod]
+.pytest_cache/
+.ipynb_checkpoints/
+*.tmp

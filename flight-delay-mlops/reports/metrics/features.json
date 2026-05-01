@@ -1,0 +1,77 @@
+{
+  "feature_set": "EXTENDED",
+  "feature_spec": {
+    "name": "EXTENDED",
+    "add_cyclic_temporal": true,
+    "add_cross_route": true,
+    "add_network_encodings": false,
+    "extra_engineered": []
+  },
+  "n_features": 53,
+  "feature_columns": [
+    "year",
+    "month",
+    "day",
+    "day_of_week",
+    "day_of_year",
+    "week_of_year",
+    "is_weekend",
+    "is_holiday_window",
+    "quarter",
+    "airline_code",
+    "aircraft_family",
+    "airline_fleet_avg_age",
+    "origin_iata",
+    "origin_region",
+    "origin_lat",
+    "origin_lon",
+    "origin_utc_offset",
+    "origin_hub_tier",
+    "destination_iata",
+    "destination_region",
+    "destination_lat",
+    "destination_lon",
+    "destination_utc_offset",
+    "destination_hub_tier",
+    "distance_km",
+    "route_group",
+    "planned_block_minutes",
+    "scheduled_dep_hour",
+    "scheduled_dep_minute",
+    "origin_temperature_c",
+    "origin_precip_mm",
+    "origin_visibility_km",
+    "origin_wind_mps",
+    "origin_weather_severity",
+    "destination_temperature_c",
+    "destination_precip_mm",
+    "destination_visibility_km",
+    "destination_wind_mps",
+    "destination_weather_severity",
+    "origin_congestion_index",
+    "destination_congestion_index",
+    "inbound_delay_minutes",
+    "month_sin",
+    "month_cos",
+    "day_of_week_sin",
+    "day_of_week_cos",
+    "scheduled_dep_hour_sin",
+    "scheduled_dep_hour_cos",
+    "utc_offset_diff",
+    "abs_utc_offset_diff",
+    "temperature_diff_c",
+    "congestion_diff",
+    "hub_tier_diff"
+  ],
+  "splits": {
+    "train": {
+      "rows": 72778
+    },
+    "val": {
+      "rows": 73095
+    },
+    "test": {
+      "rows": 72868
+    }
+  }
+}

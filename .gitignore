@@ -1,0 +1,84 @@
+# macOS
+.DS_Store
+
+# IDE
+.idea/
+.vscode/
+*.swp
+*.swo
+
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+build/
+dist/
+*.egg-info/
+*.egg
+.eggs/
+.installed.cfg
+pip-wheel-metadata/
+
+# Virtual environments
+.venv/
+venv/
+env/
+ENV/
+
+# Tests / coverage
+.pytest_cache/
+.coverage
+.coverage.*
+htmlcov/
+.tox/
+.cache
+nosetests.xml
+coverage.xml
+*.cover
+
+# Linters / formatters
+.ruff_cache/
+.mypy_cache/
+.dmypy.json
+dmypy.json
+
+# Jupyter
+.ipynb_checkpoints/
+*.ipynb_checkpoints
+
+# Environment variables
+.env
+.env.*
+!.env.example
+
+# Logs
+*.log
+logs/
+
+# MLflow
+mlruns/
+mlartifacts/
+
+# DVC
+.dvc/cache/
+.dvc/tmp/
+.dvc/plots/
+
+# Data — under DVC, not in git
+flight-delay-mlops/data/raw/*.parquet
+flight-delay-mlops/data/raw/*.csv
+flight-delay-mlops/data/interim/
+flight-delay-mlops/data/processed/
+flight-delay-mlops/data/feedback/
+!flight-delay-mlops/data/**/.gitkeep
+
+# Models — under DVC / MLflow registry
+flight-delay-mlops/models/*
+!flight-delay-mlops/models/.gitkeep
+
+# Reports artefacts (kept selectively)
+flight-delay-mlops/reports/figures/*.png
+flight-delay-mlops/reports/figures/*.html
+!flight-delay-mlops/reports/figures/.gitkeep

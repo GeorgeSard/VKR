@@ -1,0 +1,239 @@
+schema: '2.0'
+stages:
+  load:
+    cmd: python -m src.data.load --params params.yaml
+    deps:
+    - path: data/raw/flight_delays_ru.parquet
+      hash: md5
+      md5: 89f1acd4cfba4ec38ea734c0510bf6be
+      size: 12314449
+    - path: params.yaml
+      hash: md5
+      md5: 49a948481e6fabd526609e618b7929fc
+      size: 1265
+    - path: src/data/load.py
+      hash: md5
+      md5: 4e49dd6450515bd725aa198039924b3f
+      size: 3757
+    - path: src/data/validate.py
+      hash: md5
+      md5: b9cd02b98a929a1734b5f498026cf95e
+      size: 5550
+    params:
+      params.yaml:
+        data.interim_dir: data/interim
+        data.raw_path: data/raw/flight_delays_ru.parquet
+    outs:
+    - path: data/interim/validated.parquet
+      hash: md5
+      md5: 604901bd6dcfd5e36829d8c1e75d4450
+      size: 12318935
+    - path: reports/metrics/data_validation.json
+      hash: md5
+      md5: 76ab5949cd7853292897c649d07b40c1
+      size: 137
+  split:
+    cmd: python -m src.data.split --params params.yaml
+    deps:
+    - path: data/interim/validated.parquet
+      hash: md5
+      md5: 604901bd6dcfd5e36829d8c1e75d4450
+      size: 12318935
+    - path: params.yaml
+      hash: md5
+      md5: 49a948481e6fabd526609e618b7929fc
+      size: 1265
+    - path: src/data/split.py
+      hash: md5
+      md5: 7fba7780bce606646651f8d4a8c4b14e
+      size: 5170
+    params:
+      params.yaml:
+        data.interim_dir: data/interim
+        split.test_years:
+        - 2025
+        split.train_years:
+        - 2023
+        split.val_years:
+        - 2024
+    outs:
+    - path: data/interim/splits
+      hash: md5
+      md5: 5636953cc8cb940522f15a95a509b55a.dir
+      size: 13097691
+      nfiles: 3
+    - path: reports/metrics/split_report.json
+      hash: md5
+      md5: 22d7c3ddc335a0feda65572db27bda89
+      size: 198
+  features:
+    cmd: python -m src.features.build --params params.yaml
+    deps:
+    - path: data/interim/splits
+      hash: md5
+      md5: 5636953cc8cb940522f15a95a509b55a.dir
+      size: 13097691
+      nfiles: 3
+    - path: params.yaml
+      hash: md5
+      md5: 49a948481e6fabd526609e618b7929fc
+      size: 1265
+    - path: src/features/build.py
+      hash: md5
+      md5: 578fb6c99eb74672da5209ac8615d691
+      size: 7549
+    - path: src/features/feature_sets.py
+      hash: md5
+      md5: 86b732892a41c8f5cfe593b5a92fb3b4
+      size: 4966
+    params:
+      params.yaml:
+        data.interim_dir: data/interim
+        data.processed_dir: data/processed
+        features.feature_set: EXTENDED
+    outs:
+    - path: data/processed
+      hash: md5
+      md5: 7c730f4b3c3e99181481bcdb124de4d6.dir
+      size: 7449535
+      nfiles: 3
+    - path: reports/metrics/features.json
+      hash: md5
+      md5: 4ea12ec54894db236b93e37a9db97ab5
+      size: 1665
+  train_binary:
+    cmd: python -m src.models.train_binary --params params.yaml
+    deps:
+    - path: data/processed
+      hash: md5
+      md5: 7c730f4b3c3e99181481bcdb124de4d6.dir
+      size: 7449535
+      nfiles: 3
+    - path: params.yaml
+      hash: md5
+      md5: 49a948481e6fabd526609e618b7929fc
+      size: 1265
+    - path: src/models/common.py
+      hash: md5
+      md5: 50dea3f4153a46e3a367242d7c1ecc2c
+      size: 6358
+    - path: src/models/train_binary.py
+      hash: md5
+      md5: 496b77523b9fa03b0ac818ff61320a1e
+      size: 2367
+    params:
+      params.yaml:
+        features.feature_set: EXTENDED
+        seed: 42
+        train_binary:
+          model: logreg
+          target: is_departure_delayed_15m
+          class_weight: balanced
+          hyperparams:
+            C: 1.0
+            max_iter: 200
+            solver: liblinear
+    outs:
+    - path: models/binary_model.joblib
+      hash: md5
+      md5: 50b4ec40ec5018fa1924ece4d04f702e
+      size: 11734
+    - path: reports/metrics/binary_val_metrics.json
+      hash: md5
+      md5: ca37800e293ac952bd45f5106b8dc011
+      size: 590
+  train_cause:
+    cmd: python -m src.models.train_cause --params params.yaml
+    deps:
+    - path: data/processed
+      hash: md5
+      md5: 7c730f4b3c3e99181481bcdb124de4d6.dir
+      size: 7449535
+      nfiles: 3
+    - path: params.yaml
+      hash: md5
+      md5: 49a948481e6fabd526609e618b7929fc
+      size: 1265
+    - path: src/data/split.py
+      hash: md5
+      md5: 7fba7780bce606646651f8d4a8c4b14e
+      size: 5170
+    - path: src/models/common.py
+      hash: md5
+      md5: 50dea3f4153a46e3a367242d7c1ecc2c
+      size: 6358
+    - path: src/models/train_cause.py
+      hash: md5
+      md5: bcac50f87f991794fcbafcf29829dc0c
+      size: 2490
+    params:
+      params.yaml:
+        features.feature_set: EXTENDED
+        seed: 42
+        train_cause:
+          model: logreg
+          target: probable_delay_cause
+          classes:
+          - weather
+          - airport_congestion
+          - reactionary
+          - carrier_operational
+          - security
+          class_weight: balanced
+          hyperparams:
+            C: 1.0
+            max_iter: 200
+            solver: liblinear
+    outs:
+    - path: models/cause_model.joblib
+      hash: md5
+      md5: 2f650c843740d0451ef1ac7e0e340798
+      size: 18865
+    - path: reports/metrics/cause_val_metrics.json
+      hash: md5
+      md5: d78601a663b85fe33e18c768907ebace
+      size: 2215
+  evaluate:
+    cmd: python -m src.models.evaluate --params params.yaml
+    deps:
+    - path: data/processed
+      hash: md5
+      md5: 7c730f4b3c3e99181481bcdb124de4d6.dir
+      size: 7449535
+      nfiles: 3
+    - path: models/binary_model.joblib
+      hash: md5
+      md5: 50b4ec40ec5018fa1924ece4d04f702e
+      size: 11734
+    - path: models/cause_model.joblib
+      hash: md5
+      md5: 2f650c843740d0451ef1ac7e0e340798
+      size: 18865
+    - path: params.yaml
+      hash: md5
+      md5: 49a948481e6fabd526609e618b7929fc
+      size: 1265
+    - path: src/data/split.py
+      hash: md5
+      md5: 7fba7780bce606646651f8d4a8c4b14e
+      size: 5170
+    - path: src/models/common.py
+      hash: md5
+      md5: 50dea3f4153a46e3a367242d7c1ecc2c
+      size: 6358
+    - path: src/models/evaluate.py
+      hash: md5
+      md5: f802e6efbb0b15b84df15df4ae8929cb
+      size: 2580
+    params:
+      params.yaml:
+        features.feature_set: EXTENDED
+        split.test_years:
+        - 2025
+        train_binary.target: is_departure_delayed_15m
+        train_cause.target: probable_delay_cause
+    outs:
+    - path: reports/metrics/test_metrics.json
+      hash: md5
+      md5: 66704ffcc33d79c62f46f839df97a2ed
+      size: 2825

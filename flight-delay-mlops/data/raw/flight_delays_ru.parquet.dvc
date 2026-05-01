@@ -1,0 +1,5 @@
+outs:
+- md5: 89f1acd4cfba4ec38ea734c0510bf6be
+  size: 12314449
+  hash: md5
+  path: flight_delays_ru.parquet

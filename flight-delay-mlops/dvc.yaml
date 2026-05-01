@@ -1,0 +1,107 @@
+vars:
+  - params.yaml
+
+stages:
+  load:
+    cmd: python -m src.data.load --params params.yaml
+    deps:
+      - src/data/load.py
+      - src/data/validate.py
+      - ${data.raw_path}
+      - params.yaml
+    params:
+      - data.raw_path
+      - data.interim_dir
+    outs:
+      - ${data.interim_dir}/validated.parquet
+    metrics:
+      - reports/metrics/data_validation.json:
+          cache: false
+
+  split:
+    cmd: python -m src.data.split --params params.yaml
+    deps:
+      - src/data/split.py
+      - ${data.interim_dir}/validated.parquet
+      - params.yaml
+    params:
+      - data.interim_dir
+      - split.train_years
+      - split.val_years
+      - split.test_years
+    outs:
+      - ${data.interim_dir}/splits
+    metrics:
+      - reports/metrics/split_report.json:
+          cache: false
+
+  features:
+    cmd: python -m src.features.build --params params.yaml
+    deps:
+      - src/features/build.py
+      - src/features/feature_sets.py
+      - ${data.interim_dir}/splits
+      - params.yaml
+    params:
+      - data.interim_dir
+      - data.processed_dir
+      - features.feature_set
+    outs:
+      - ${data.processed_dir}
+    metrics:
+      - reports/metrics/features.json:
+          cache: false
+
+  train_binary:
+    cmd: python -m src.models.train_binary --params params.yaml
+    deps:
+      - src/models/common.py
+      - src/models/train_binary.py
+      - ${data.processed_dir}
+      - params.yaml
+    params:
+      - seed
+      - features.feature_set
+      - train_binary
+    outs:
+      - models/binary_model.joblib
+    metrics:
+      - reports/metrics/binary_val_metrics.json:
+          cache: false
+
+  train_cause:
+    cmd: python -m src.models.train_cause --params params.yaml
+    deps:
+      - src/data/split.py
+      - src/models/common.py
+      - src/models/train_cause.py
+      - ${data.processed_dir}
+      - params.yaml
+    params:
+      - seed
+      - features.feature_set
+      - train_cause
+    outs:
+      - models/cause_model.joblib
+    metrics:
+      - reports/metrics/cause_val_metrics.json:
+          cache: false
+
+  evaluate:
+    cmd: python -m src.models.evaluate --params params.yaml
+    deps:
+      - src/data/split.py
+      - src/models/common.py
+      - src/models/evaluate.py
+      - ${data.processed_dir}
+      - models/binary_model.joblib
+      - models/cause_model.joblib
+      - params.yaml
+    params:
+      - split.test_years
+      - features.feature_set
+      - train_binary.target
+      - train_cause.target
+    metrics:
+      - reports/metrics/test_metrics.json:
+          cache: false
